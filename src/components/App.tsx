@@ -26,21 +26,38 @@ export const App = () => {
     )
   }, [])
 
-  console.log(allBlocks)
-
   return (
-    <Field width={10} height={20}>
-      {Object.entries(allBlocks).map(([blockPointHash, blockConfig]) => {
-        const p = Point.fromHash(blockPointHash)
-        return (
-          <Block
-            key={blockPointHash}
-            color={blockConfig.color}
-            x={p.x}
-            y={p.y}
-          />
-        )
-      })}
-    </Field>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+      }}
+    >
+      <div
+        style={{
+          width: '200px',
+          height: '400px',
+          borderLeft: 'solid 5px black',
+          borderRight: 'solid 5px black',
+          borderBottom: 'solid 5px black',
+        }}
+      >
+        <Field width={10} height={20}>
+          {Object.entries(allBlocks).map(([blockPointHash, blockConfig]) => {
+            const p = Point.fromHash(blockPointHash)
+            return (
+              <Block
+                key={blockPointHash}
+                color={blockConfig.color}
+                x={p.x}
+                y={p.y}
+              />
+            )
+          })}
+        </Field>
+      </div>
+    </div>
   )
 }
