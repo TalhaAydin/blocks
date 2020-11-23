@@ -1,4 +1,4 @@
-import { Coordinate, Point, Vector } from '../types/math'
+import { Coordinate, Point, Size, Vector } from '../types/math'
 
 export const isPointHash = (hash: string): boolean =>
   /^point:-?\d+:-?\d+$/.test(hash)
@@ -15,6 +15,11 @@ export const createVector = (x: number, y: number): Vector => ({
   type: 'vector',
   x,
   y,
+})
+
+export const createSize = (width: number, height: number): Size => ({
+  width,
+  height,
 })
 
 export const getHash = <T extends Coordinate>({ type, x, y }: T): string =>
@@ -51,3 +56,9 @@ export const addVector = (vectorA: Vector, vectorB: Vector): Vector => ({
   x: vectorA.x + vectorB.x,
   y: vectorA.y + vectorB.y,
 })
+
+export const isInArea = (size: Size, point: Point) =>
+  point.x < size.width && point.y < size.height && point.x >= 0 && point.y >= 0
+
+export const areInArea = (size: Size, points: Point[]) =>
+  points.every((p) => isInArea(size, p))

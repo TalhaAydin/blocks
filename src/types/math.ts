@@ -11,6 +11,12 @@ export interface Vector extends Coordinate {
   readonly type: 'vector'
 }
 
+// size
+export interface Size {
+  readonly width: number
+  readonly height: number
+}
+
 // hash
 export type PointHash = string
 export type VectorHash = string

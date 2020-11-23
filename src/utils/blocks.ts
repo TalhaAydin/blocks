@@ -1,5 +1,5 @@
 import { Blocks } from '../types/blocks'
-import { Vector } from '../types/math'
+import { Point, Vector } from '../types/math'
 import { getHash, getPoint, movePoint } from './math'
 
 export const moveBlocks = (blocks: Blocks, vector: Vector): Blocks => {
@@ -10,3 +10,6 @@ export const moveBlocks = (blocks: Blocks, vector: Vector): Blocks => {
     ])
   )
 }
+
+export const getPoints = (blocks: Blocks): Point[] =>
+  Object.keys(blocks).map((h) => getPoint(h))
