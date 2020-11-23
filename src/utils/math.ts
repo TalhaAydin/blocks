@@ -57,11 +57,10 @@ export const addVector = (vectorA: Vector, vectorB: Vector): Vector => ({
   y: vectorA.y + vectorB.y,
 })
 
-export const isInArea = (size: Size, point: Point) =>
-  point.x < size.width && point.y < size.height && point.x >= 0 && point.y >= 0
-
-export const areInArea = (size: Size, points: Point[]) =>
-  points.every((p) => isInArea(size, p))
+export const isInArea = (size: Size) => (point: Point | Point[]) =>
+  (Array.isArray(point) ? point : [point]).every(
+    (p) => p.x < size.width && p.y < size.height && p.x >= 0 && p.y >= 0
+  )
 
 export const Movement: Record<string, Vector> = {
   Left: createVector(-1, 0),
