@@ -1,6 +1,7 @@
 import { Reducer } from 'redux'
 import { EntitiesActions, EntitiesActionType } from '../actions/entities'
 import { EntityID, EntityData } from '../../types/entities'
+import { addVector } from '../../utils/math'
 
 export type EntitiesState = Record<EntityID, EntityData>
 
@@ -15,6 +16,14 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
       return {
         ...state,
         [action.id]: action.data,
+      }
+    case EntitiesActionType.MOVE:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          position: addVector(state[action.id].position, action.vector),
+        },
       }
     default:
       return state

@@ -1,5 +1,5 @@
 import { StandardLonghandProperties } from 'csstype'
-import { PointHash } from '../utils/math/Point'
+import { PointHash } from '../types/math'
 
 export type BlockConfig = {
   color: StandardLonghandProperties['backgroundColor']

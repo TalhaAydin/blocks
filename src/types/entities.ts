@@ -1,7 +1,7 @@
-import { VectorSerialized } from '../utils/math/Vector'
 import { Blocks } from './blocks'
+import { Vector } from './math'
 
-export type EntityPosition = VectorSerialized
+export type EntityPosition = Vector
 export type EntityRotation = 0 | 90 | 180 | 270
 export type EntityShape = Blocks
 

@@ -1,9 +1,9 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addEntity } from '../redux/actions/entities'
+import { addEntity, moveEntity } from '../redux/actions/entities'
 import { getAllBlocks } from '../redux/selectors/entities'
-import { Point } from '../utils/math/Point'
-import { Vector } from '../utils/math/Vector'
+import { Movement } from '../types/vector'
+import { createPoint, createVector, getHash, getPoint } from '../utils/math'
 import { Block } from './Block'
 import { Field } from './Field'
 
@@ -12,15 +12,30 @@ export const App = () => {
   const allBlocks = useSelector(getAllBlocks)
 
   useEffect(() => {
+    document.addEventListener('keydown', (e) => {
+      console.log(e)
+      if (e.code === 'ArrowDown') {
+        dispatch(moveEntity('tetromino', Movement.Down))
+      }
+      if (e.code === 'ArrowLeft') {
+        dispatch(moveEntity('tetromino', Movement.Left))
+      }
+      if (e.code === 'ArrowRight') {
+        dispatch(moveEntity('tetromino', Movement.Right))
+      }
+      if (e.code === 'ArrowUp') {
+        dispatch(moveEntity('tetromino', Movement.Up))
+      }
+    })
     dispatch(
       addEntity('tetromino', {
         shape: {
-          [Point.toHash(0, 0)]: { color: 'purple' },
-          [Point.toHash(-1, 0)]: { color: 'purple' },
-          [Point.toHash(1, 0)]: { color: 'purple' },
-          [Point.toHash(0, 1)]: { color: 'purple' },
+          [getHash(createPoint(0, 0))]: { color: 'purple' },
+          [getHash(createPoint(-1, 0))]: { color: 'purple' },
+          [getHash(createPoint(1, 0))]: { color: 'purple' },
+          [getHash(createPoint(0, 1))]: { color: 'purple' },
         },
-        position: Vector.serialize(5, 5),
+        position: createVector(5, 5),
         rotation: 0,
       })
     )
@@ -46,7 +61,7 @@ export const App = () => {
       >
         <Field width={10} height={20}>
           {Object.entries(allBlocks).map(([blockPointHash, blockConfig]) => {
-            const p = Point.fromHash(blockPointHash)
+            const p = getPoint(blockPointHash)
             return (
               <Block
                 key={blockPointHash}
