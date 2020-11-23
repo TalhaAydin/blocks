@@ -4,9 +4,15 @@ import { Vector } from '../../types/math'
 
 // types & type guards
 
+export enum EntityRotationDirection {
+  Left = -90,
+  Right = 90,
+}
+
 export enum EntitiesActionType {
   ADD = 'ENTITIES_ADD',
   MOVE = 'ENTITIES_MOVE',
+  ROTATE = 'ENTITIES_ROTATE',
 }
 
 export interface AddEntityAction extends Action<EntitiesActionType.ADD> {
@@ -19,7 +25,15 @@ export interface MoveEntityAction extends Action<EntitiesActionType.MOVE> {
   vector: Vector
 }
 
-export type EntitiesActions = AddEntityAction | MoveEntityAction
+export interface RotateEntityAction extends Action<EntitiesActionType.ROTATE> {
+  id: EntityID
+  direction: EntityRotationDirection
+}
+
+export type EntitiesActions =
+  | AddEntityAction
+  | MoveEntityAction
+  | RotateEntityAction
 
 // implementations
 
@@ -33,4 +47,13 @@ export const moveEntity = (id: EntityID, vector: Vector): MoveEntityAction => ({
   type: EntitiesActionType.MOVE,
   id,
   vector,
+})
+
+export const rotateEntity = (
+  id: EntityID,
+  direction: EntityRotationDirection
+): RotateEntityAction => ({
+  type: EntitiesActionType.ROTATE,
+  id,
+  direction,
 })

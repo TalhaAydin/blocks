@@ -1,4 +1,4 @@
-import { Coordinate, Point, Size, Vector } from '../types/math'
+import { Coordinate, Point, RotationMatrix, Size, Vector } from '../types/math'
 
 export const isPointHash = (hash: string): boolean =>
   /^point:-?\d+:-?\d+$/.test(hash)
@@ -62,3 +62,10 @@ export const isInArea = (size: Size, point: Point) =>
 
 export const areInArea = (size: Size, points: Point[]) =>
   points.every((p) => isInArea(size, p))
+
+export const Movement: Record<string, Vector> = {
+  Left: createVector(-1, 0),
+  Right: createVector(1, 0),
+  Up: createVector(0, -1),
+  Down: createVector(0, 1),
+}

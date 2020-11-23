@@ -20,3 +20,6 @@ export interface Size {
 // hash
 export type PointHash = string
 export type VectorHash = string
+
+// matrix
+export type RotationMatrix = [number, number, number, number]

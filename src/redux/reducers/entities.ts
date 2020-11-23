@@ -25,6 +25,14 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
           position: addVector(state[action.id].position, action.vector),
         },
       }
+    case EntitiesActionType.ROTATE:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          rotation: (state[action.id].rotation + action.direction) % 360,
+        },
+      }
     default:
       return state
   }
