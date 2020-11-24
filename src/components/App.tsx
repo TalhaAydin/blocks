@@ -1,9 +1,19 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addEntity, moveEntity } from '../redux/actions/entities'
+import {
+  addEntity,
+  EntityRotationDirection,
+  moveEntity,
+  rotateEntity,
+} from '../redux/actions/entities'
 import { getAllBlocks } from '../redux/selectors/entities'
-import { Movement } from '../types/vector'
-import { createPoint, createVector, getHash, getPoint } from '../utils/math'
+import {
+  createPoint,
+  createVector,
+  getHash,
+  getPoint,
+  Movement,
+} from '../utils/math'
 import { Block } from './Block'
 import { Field } from './Field'
 
@@ -13,6 +23,7 @@ export const App = () => {
 
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
+      console.log(e)
       if (e.code === 'ArrowDown') {
         dispatch(moveEntity('tetromino', Movement.Down))
       }
@@ -23,7 +34,12 @@ export const App = () => {
         dispatch(moveEntity('tetromino', Movement.Right))
       }
       if (e.code === 'ArrowUp') {
-        dispatch(moveEntity('tetromino', Movement.Up))
+        dispatch(
+          rotateEntity(
+            'tetromino',
+            EntityRotationDirection[e.ctrlKey ? 'Left' : 'Right']
+          )
+        )
       }
     })
     dispatch(

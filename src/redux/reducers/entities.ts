@@ -30,7 +30,7 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
         ...state,
         [action.id]: {
           ...state[action.id],
-          rotation: (state[action.id].rotation + action.direction) % 360,
+          rotation: (360 + state[action.id].rotation + action.direction) % 360,
         },
       }
     default:
