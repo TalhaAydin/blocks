@@ -23,7 +23,7 @@ export const App = () => {
 
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
-      console.log(e)
+      // console.log(e)
       if (e.code === 'ArrowDown') {
         dispatch(moveEntity('tetromino', Movement.Down))
       }

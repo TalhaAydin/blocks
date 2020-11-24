@@ -1,23 +1,28 @@
 import { Middleware } from 'redux'
 import { getPoints, moveBlocks, rotateBlocks } from '../../utils/blocks'
+import { getNextEntityRotation } from '../../utils/entities'
 import { isInArea, createSize } from '../../utils/math'
 import { EntitiesActionType } from '../actions/entities'
 import { getEntityData } from '../selectors/entities'
 import { AllActions } from '../types'
 
-export const keepInField: Middleware = ({ dispatch, getState }) => (next) => (
+export const rotateInField: Middleware = ({ dispatch, getState }) => (next) => (
   action: AllActions
 ) => {
-  if (action.type !== EntitiesActionType.MOVE) {
+  if (action.type !== EntitiesActionType.ROTATE) {
     return next(action)
   }
 
   const entityData = getEntityData(action.id)(getState())
-  const rotatedShape = rotateBlocks(entityData.shape, entityData.rotation)
-  const realPosition = moveBlocks(rotatedShape, entityData.position)
-  const nextPosition = moveBlocks(realPosition, action.vector)
+  const result = moveBlocks(
+    rotateBlocks(
+      entityData.shape,
+      getNextEntityRotation(entityData.rotation, action.direction)
+    ),
+    entityData.position
+  )
 
-  if (isInArea(createSize(10, 20))(getPoints(nextPosition))) {
+  if (isInArea(createSize(10, 20))(getPoints(result))) {
     return next(action)
   }
 }

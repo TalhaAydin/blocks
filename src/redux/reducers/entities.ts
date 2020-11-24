@@ -2,6 +2,7 @@ import { Reducer } from 'redux'
 import { EntitiesActions, EntitiesActionType } from '../actions/entities'
 import { EntityID, EntityData } from '../../types/entities'
 import { addVector } from '../../utils/math'
+import { getNextEntityRotation } from '../../utils/entities'
 
 export type EntitiesState = Record<EntityID, EntityData>
 
@@ -30,7 +31,10 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
         ...state,
         [action.id]: {
           ...state[action.id],
-          rotation: (360 + state[action.id].rotation + action.direction) % 360,
+          rotation: getNextEntityRotation(
+            state[action.id].rotation,
+            action.direction
+          ),
         },
       }
     default:
