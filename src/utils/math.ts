@@ -51,6 +51,17 @@ export const movePoint = (point: Point, vector: Vector): Point => ({
   y: point.y + vector.y,
 })
 
+// https://en.wikipedia.org/wiki/Rotation_matrix
+export const rotatePoint = (point: Point, angleInRadians: number): Point => ({
+  type: 'point',
+  x: point.x * Math.cos(angleInRadians) - point.y * Math.sin(angleInRadians),
+  y: point.x * Math.sin(angleInRadians) + point.y * Math.cos(angleInRadians),
+})
+
+// https://en.wikipedia.org/wiki/Radian
+export const getRadians = (angleInDegrees: number) =>
+  angleInDegrees * (Math.PI / 180)
+
 export const addVector = (vectorA: Vector, vectorB: Vector): Vector => ({
   type: 'vector',
   x: vectorA.x + vectorB.x,

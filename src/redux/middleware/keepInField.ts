@@ -1,5 +1,5 @@
 import { Middleware } from 'redux'
-import { getPoints, moveBlocks } from '../../utils/blocks'
+import { getPoints, moveBlocks, rotateBlocks } from '../../utils/blocks'
 import { isInArea, createSize } from '../../utils/math'
 import { EntitiesActionType } from '../actions/entities'
 import { getEntityData } from '../selectors/entities'
@@ -13,7 +13,8 @@ export const keepInField: Middleware = ({ dispatch, getState }) => (next) => (
   }
 
   const entityData = getEntityData(action.id)(getState())
-  const realPosition = moveBlocks(entityData.shape, entityData.position)
+  const rotatedShape = rotateBlocks(entityData.shape, entityData.rotation)
+  const realPosition = moveBlocks(rotatedShape, entityData.position)
   const nextPosition = moveBlocks(realPosition, action.vector)
 
   if (isInArea(createSize(10, 20))(getPoints(nextPosition))) {

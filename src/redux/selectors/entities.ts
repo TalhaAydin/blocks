@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { RootState } from '../reducers/root'
 import { EntitiesState } from '../reducers/entities'
-import { moveBlocks } from '../../utils/blocks'
+import { moveBlocks, rotateBlocks } from '../../utils/blocks'
 import { Blocks } from '../../types/blocks'
 import { EntityData, EntityID } from '../../types/entities'
 
@@ -14,9 +14,9 @@ export const getAllBlocks = createSelector(
   getEntities,
   (entities): Blocks => {
     return Object.values(entities).reduce(
-      (result, { shape, position }) => ({
+      (result, { shape, position, rotation }) => ({
         ...result,
-        ...moveBlocks(shape, position),
+        ...moveBlocks(rotateBlocks(shape, rotation), position),
       }),
       {}
     )
