@@ -41,6 +41,15 @@ export const App = () => {
       }
     })
     dispatch(
+      addEntity('pile', {
+        shape: {
+          [getHash(createPoint(0, 0))]: { color: 'red' },
+        },
+        position: createVector(5, 19),
+        rotation: 0,
+      })
+    )
+    dispatch(
       addEntity('tetromino', {
         shape: {
           [getHash(createPoint(0, 0))]: { color: 'purple' },

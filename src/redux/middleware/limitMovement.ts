@@ -2,7 +2,7 @@ import { Middleware } from 'redux'
 import { getBlockPath, getPoints } from '../../utils/blocks'
 import { getPlacedEntityBlocks } from '../../utils/entities'
 import { EntitiesActionType } from '../actions/entities'
-import { getEntityData } from '../selectors/entities'
+import { getEntities } from '../selectors/entities'
 import { AllActions } from '../types'
 import { addVector, createVector } from '../../utils/vector'
 import { getOutOfBounds, getOverlaps } from '../../utils/point'
@@ -15,7 +15,11 @@ export const limitMovement: Middleware = ({ getState }) => (next) => (
     return next(action)
   }
 
-  const entityData = getEntityData(action.id)(getState())
+  const { [action.id]: entityData, ...restEntityData } = getEntities(getState())
+
+  const restPoints = getPoints(
+    getPlacedEntityBlocks(Object.values(restEntityData))
+  )
 
   let resultVector = createVector(0, 0)
   getBlockPath(action.vector).every((v) => {
@@ -26,7 +30,10 @@ export const limitMovement: Middleware = ({ getState }) => (next) => (
         position: addVector(entityData.position, nextVector),
       })
     )
-    if (getOutOfBounds(createSize(10, 20))(nextPoints).length > 0) {
+    if (
+      getOutOfBounds(createSize(10, 20))(nextPoints).length > 0 ||
+      getOverlaps(restPoints)(nextPoints).length > 0
+    ) {
       return false
     }
     resultVector = nextVector
