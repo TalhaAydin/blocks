@@ -7,13 +7,9 @@ import {
   rotateEntity,
 } from '../redux/actions/entities'
 import { getAllBlocks } from '../redux/selectors/entities'
-import {
-  createPoint,
-  createVector,
-  getHash,
-  getPoint,
-  Movement,
-} from '../utils/math'
+import { getHash } from '../utils/coordinate'
+import { createPoint, getPoint } from '../utils/point'
+import { createVector, Movement } from '../utils/vector'
 import { Block } from './Block'
 import { Field } from './Field'
 

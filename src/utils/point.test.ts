@@ -1,4 +1,5 @@
-import { createPoint, createSize, isInArea } from './math'
+import { createPoint, isInArea } from './point'
+import { createSize } from './size'
 
 describe('isInArea()', () => {
   describe('with single Point', () => {

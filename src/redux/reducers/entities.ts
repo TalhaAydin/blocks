@@ -1,8 +1,19 @@
 import { Reducer } from 'redux'
 import { EntitiesActions, EntitiesActionType } from '../actions/entities'
-import { EntityID, EntityData } from '../../types/entities'
-import { addVector } from '../../utils/math'
 import { getNextEntityRotation } from '../../utils/entities'
+import { addVector, Vector } from '../../utils/vector'
+import { Blocks } from '../../utils/blocks'
+
+export type EntityPosition = Vector
+export type EntityRotation = number // 0 | 90 | 180 | 270
+export type EntityShape = Blocks
+
+export type EntityID = string
+export interface EntityData {
+  shape: EntityShape
+  position: EntityPosition
+  rotation: EntityRotation
+}
 
 export type EntitiesState = Record<EntityID, EntityData>
 

@@ -1,13 +1,14 @@
-import { BlockConfig, Blocks } from '../types/blocks'
-import { Point, Vector } from '../types/math'
-import {
-  createPoint,
-  getHash,
-  getPoint,
-  getRadians,
-  movePoint,
-  rotatePoint,
-} from './math'
+import { StandardLonghandProperties } from 'csstype'
+import { getRadians, rotatePoint } from './angle'
+import { getHash } from './coordinate'
+import { createPoint, getPoint, movePoint, Point, PointHash } from './point'
+import { Vector } from './vector'
+
+export type BlockConfig = {
+  color: StandardLonghandProperties['backgroundColor']
+}
+
+export type Blocks = Record<PointHash, BlockConfig>
 
 export const moveBlocks = (blocks: Blocks, vector: Vector): Blocks =>
   mapBlocks(blocks, (p, c) => [movePoint(p, vector), c])

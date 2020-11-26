@@ -1,9 +1,7 @@
 import { createSelector } from 'reselect'
 import { RootState } from '../reducers/root'
-import { EntitiesState } from '../reducers/entities'
-import { moveBlocks, rotateBlocks } from '../../utils/blocks'
-import { Blocks } from '../../types/blocks'
-import { EntityData, EntityID } from '../../types/entities'
+import { EntitiesState, EntityData, EntityID } from '../reducers/entities'
+import { Blocks, moveBlocks, rotateBlocks } from '../../utils/blocks'
 
 export const getEntities = (state: RootState): EntitiesState => state.entities
 

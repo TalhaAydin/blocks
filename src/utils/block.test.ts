@@ -1,5 +1,5 @@
 import { rotateBlockPoint } from './blocks'
-import { createPoint } from './math'
+import { createPoint } from './point'
 
 describe('rotatePoint()', () => {
   it('rotates 90 degrees', () => {

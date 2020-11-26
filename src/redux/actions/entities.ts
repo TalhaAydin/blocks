@@ -1,6 +1,6 @@
 import { Action } from 'redux'
-import { EntityData, EntityID } from '../../types/entities'
-import { Vector } from '../../types/math'
+import { Vector } from '../../utils/vector'
+import { EntityData, EntityID } from '../reducers/entities'
 
 // types & type guards
 
