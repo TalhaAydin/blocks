@@ -10,9 +10,9 @@ export type EntityShape = Blocks
 
 export type EntityID = string
 export interface EntityData {
-  shape: EntityShape
-  position: EntityPosition
-  rotation: EntityRotation
+  readonly shape: EntityShape
+  readonly position: EntityPosition
+  readonly rotation: EntityRotation
 }
 
 export type EntitiesState = Record<EntityID, EntityData>

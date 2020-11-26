@@ -1,8 +1,9 @@
 import { StandardLonghandProperties } from 'csstype'
 import { getRadians, rotatePoint } from './angle'
 import { getHash } from './coordinate'
+import { getNumberSequence } from './misc'
 import { createPoint, getPoint, movePoint, Point, PointHash } from './point'
-import { Vector } from './vector'
+import { createVector, Vector } from './vector'
 
 export type BlockConfig = {
   color: StandardLonghandProperties['backgroundColor']
@@ -38,3 +39,12 @@ export const rotateBlockPoint = (
   const p = rotatePoint(point, getRadians(angleInDegrees))
   return createPoint(Math.round(p.x) + 0, Math.round(p.y) + 0) // add 0 to fix -0
 }
+
+export const getBlockPath = (vector: Vector): Vector[] => [
+  ...Array(Math.abs(vector.x))
+    .fill(0)
+    .map(() => createVector(vector.x > 0 ? 1 : -1, 0)),
+  ...Array(Math.abs(vector.y))
+    .fill(0)
+    .map(() => createVector(0, vector.y > 0 ? 1 : -1)),
+]

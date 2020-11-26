@@ -19,7 +19,9 @@ export const App = () => {
 
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
-      // console.log(e)
+      if (e.code === 'Space') {
+        dispatch(moveEntity('tetromino', createVector(0, 20)))
+      }
       if (e.code === 'ArrowDown') {
         dispatch(moveEntity('tetromino', Movement.Down))
       }

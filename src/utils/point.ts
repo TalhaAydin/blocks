@@ -1,4 +1,4 @@
-import { Coordinate } from './coordinate'
+import { Coordinate, isEqual } from './coordinate'
 import { Size } from './size'
 import { Vector } from './vector'
 
@@ -25,13 +25,16 @@ export const getPoint = (hash: string): Point => {
   return { type: 'point', x: parseInt(split[1], 10), y: parseInt(split[2], 10) }
 }
 
-export const movePoint = (point: Point, vector: Vector): Point => ({
-  type: 'point',
-  x: point.x + vector.x,
-  y: point.y + vector.y,
-})
+export const movePoint = (point: Point, vector: Vector): Point =>
+  createPoint(point.x + vector.x, point.y + vector.y)
 
-export const isInArea = (size: Size) => (point: Point | Point[]) =>
+export const isWithinBounds = (size: Size) => (point: Point | Point[]) =>
   (Array.isArray(point) ? point : [point]).every(
     (p) => p.x < size.width && p.y < size.height && p.x >= 0 && p.y >= 0
   )
+
+export const getOutOfBounds = (size: Size) => (points: Point[]) =>
+  points.filter((p) => !isWithinBounds(size)(p))
+
+export const getOverlaps = (first: Point[]) => (second: Point[]) =>
+  second.filter((sp) => first.some((fp) => isEqual(fp, sp)))

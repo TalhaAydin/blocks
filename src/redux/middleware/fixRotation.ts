@@ -1,13 +1,13 @@
 import { Middleware } from 'redux'
 import { getPoints, moveBlocks, rotateBlocks } from '../../utils/blocks'
 import { getNextEntityRotation } from '../../utils/entities'
-import { isInArea } from '../../utils/point'
+import { isWithinBounds } from '../../utils/point'
 import { createSize } from '../../utils/size'
 import { EntitiesActionType } from '../actions/entities'
 import { getEntityData } from '../selectors/entities'
 import { AllActions } from '../types'
 
-export const rotateInField: Middleware = ({ dispatch, getState }) => (next) => (
+export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
   action: AllActions
 ) => {
   if (action.type !== EntitiesActionType.ROTATE) {
@@ -23,7 +23,7 @@ export const rotateInField: Middleware = ({ dispatch, getState }) => (next) => (
     entityData.position
   )
 
-  if (isInArea(createSize(10, 20))(getPoints(result))) {
+  if (isWithinBounds(createSize(10, 20))(getPoints(result))) {
     return next(action)
   }
 }

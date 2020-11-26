@@ -1,10 +1,10 @@
 import { applyMiddleware, createStore } from 'redux'
-import { moveInField } from './middleware/moveInField'
+import { limitMovement } from './middleware/limitMovement'
 import { rootReducer } from './reducers/root'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { rotateInField } from './middleware/rotateInField'
+import { fixRotation } from './middleware/fixRotation'
 
 export const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(moveInField, rotateInField))
+  composeWithDevTools(applyMiddleware(limitMovement, fixRotation))
 )
