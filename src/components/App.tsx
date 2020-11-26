@@ -43,7 +43,19 @@ export const App = () => {
     dispatch(
       addEntity('pile', {
         shape: {
-          [getHash(createPoint(0, 0))]: { color: 'red' },
+          [getHash(createPoint(0, 0))]: { color: 'grey' },
+          [getHash(createPoint(1, 0))]: { color: 'grey' },
+          [getHash(createPoint(0, -1))]: { color: 'grey' },
+          [getHash(createPoint(0, -2))]: { color: 'grey' },
+          [getHash(createPoint(0, -3))]: { color: 'grey' },
+          [getHash(createPoint(0, -4))]: { color: 'grey' },
+          [getHash(createPoint(-1, 0))]: { color: 'grey' },
+          [getHash(createPoint(-1, -1))]: { color: 'grey' },
+          [getHash(createPoint(-1, -2))]: { color: 'grey' },
+          [getHash(createPoint(-1, -3))]: { color: 'grey' },
+          [getHash(createPoint(-2, 0))]: { color: 'grey' },
+          [getHash(createPoint(-2, -1))]: { color: 'grey' },
+          [getHash(createPoint(-2, -2))]: { color: 'grey' },
         },
         position: createVector(5, 19),
         rotation: 0,

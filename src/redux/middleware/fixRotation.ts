@@ -1,10 +1,14 @@
 import { Middleware } from 'redux'
-import { getPoints, moveBlocks, rotateBlocks } from '../../utils/blocks'
-import { getNextEntityRotation } from '../../utils/entities'
-import { isWithinBounds } from '../../utils/point'
+import { getPoints, moveBlocks } from '../../utils/blocks'
+import {
+  getNextEntityRotation,
+  getPlacedEntityBlocks,
+} from '../../utils/entities'
+import { getOutOfBounds, getOverlaps } from '../../utils/point'
 import { createSize } from '../../utils/size'
-import { EntitiesActionType } from '../actions/entities'
-import { getEntityData } from '../selectors/entities'
+import { createVector } from '../../utils/vector'
+import { EntitiesActionType, moveEntity } from '../actions/entities'
+import { getEntities } from '../selectors/entities'
 import { AllActions } from '../types'
 
 export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
@@ -14,16 +18,40 @@ export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
     return next(action)
   }
 
-  const entityData = getEntityData(action.id)(getState())
-  const result = moveBlocks(
-    rotateBlocks(
-      entityData.shape,
-      getNextEntityRotation(entityData.rotation, action.direction)
-    ),
-    entityData.position
+  const { [action.id]: entityData, ...restEntityData } = getEntities(getState())
+
+  const placedEntityBlocks = getPlacedEntityBlocks({
+    ...entityData,
+    rotation: getNextEntityRotation(entityData.rotation, action.direction),
+  })
+
+  const restPoints = getPoints(
+    getPlacedEntityBlocks(Object.values(restEntityData))
   )
 
-  if (isWithinBounds(createSize(10, 20))(getPoints(result))) {
-    return next(action)
-  }
+  const simulationVectors = [
+    createVector(0, 0),
+    createVector(0, -1),
+    createVector(-1, 0),
+    createVector(-2, 0),
+    createVector(1, 0),
+    createVector(2, 0),
+  ]
+
+  simulationVectors.some((v) => {
+    const nextPoints = getPoints(moveBlocks(placedEntityBlocks, v))
+
+    if (
+      getOutOfBounds(createSize(10, 20))(nextPoints).length === 0 &&
+      getOverlaps(restPoints)(nextPoints).length === 0
+    ) {
+      if (v.x !== 0 || v.y !== 0) {
+        dispatch(moveEntity(action.id, v))
+      }
+      next(action)
+      return true
+    }
+
+    return false
+  })
 }
