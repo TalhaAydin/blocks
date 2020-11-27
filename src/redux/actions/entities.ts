@@ -1,4 +1,5 @@
 import { Action } from 'redux'
+import { Blocks } from '../../utils/blocks'
 import { Vector } from '../../utils/vector'
 import { EntityData, EntityID } from '../reducers/entities'
 
@@ -13,6 +14,9 @@ export enum EntitiesActionType {
   ADD = 'ENTITIES_ADD',
   MOVE = 'ENTITIES_MOVE',
   ROTATE = 'ENTITIES_ROTATE',
+  ADD_BLOCKS = 'ENTITIES_ADD_BLOCKS',
+  DELETE = 'ENTITIES_DELETE',
+  MOVEMENT_LIMITED = 'ENTITIES_MOVEMENT_LIMITED',
 }
 
 export interface AddEntityAction extends Action<EntitiesActionType.ADD> {
@@ -30,10 +34,29 @@ export interface RotateEntityAction extends Action<EntitiesActionType.ROTATE> {
   direction: EntityRotationDirection
 }
 
+export interface AddBlocksAction extends Action<EntitiesActionType.ADD_BLOCKS> {
+  id: EntityID
+  blocks: Blocks
+}
+
+export interface DeleteEntityAction extends Action<EntitiesActionType.DELETE> {
+  id: EntityID
+}
+
+export interface EntityMovementLimitedAction
+  extends Action<EntitiesActionType.MOVEMENT_LIMITED> {
+  id: EntityID
+  vector: Vector
+  original: Vector
+}
+
 export type EntitiesActions =
   | AddEntityAction
   | MoveEntityAction
   | RotateEntityAction
+  | AddBlocksAction
+  | DeleteEntityAction
+  | EntityMovementLimitedAction
 
 // implementations
 
@@ -56,4 +79,26 @@ export const rotateEntity = (
   type: EntitiesActionType.ROTATE,
   id,
   direction,
+})
+
+export const addBlocks = (id: EntityID, blocks: Blocks): AddBlocksAction => ({
+  type: EntitiesActionType.ADD_BLOCKS,
+  id,
+  blocks,
+})
+
+export const deleteEntity = (id: EntityID): DeleteEntityAction => ({
+  type: EntitiesActionType.DELETE,
+  id,
+})
+
+export const movementLimited = (
+  id: EntityID,
+  vector: Vector,
+  original: Vector
+) => ({
+  type: EntitiesActionType.MOVEMENT_LIMITED,
+  id,
+  vector,
+  original,
 })

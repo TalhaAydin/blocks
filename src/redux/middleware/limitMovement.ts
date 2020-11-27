@@ -1,14 +1,20 @@
 import { Middleware } from 'redux'
 import { getBlockPath, getPoints } from '../../utils/blocks'
 import { getPlacedEntityBlocks } from '../../utils/entities'
-import { EntitiesActionType } from '../actions/entities'
+import { EntitiesActionType, movementLimited } from '../actions/entities'
 import { getEntities } from '../selectors/entities'
 import { AllActions } from '../types'
-import { addVector, createVector, isZeroVector } from '../../utils/vector'
+import {
+  addVector,
+  createVector,
+  isDownVector,
+  isZeroVector,
+} from '../../utils/vector'
 import { getOutOfBounds, getOverlaps } from '../../utils/point'
 import { createSize } from '../../utils/size'
+import { isEqual } from '../../utils/coordinate'
 
-export const limitMovement: Middleware = ({ getState }) => (next) => (
+export const limitMovement: Middleware = ({ dispatch, getState }) => (next) => (
   action: AllActions
 ) => {
   if (action.type !== EntitiesActionType.MOVE) {
@@ -44,6 +50,10 @@ export const limitMovement: Middleware = ({ getState }) => (next) => (
     .reduce(addVector, createVector(0, 0))
 
   if (!isZeroVector(vector)) {
-    return next({ ...action, vector })
+    next({ ...action, vector })
+  }
+
+  if (!isEqual(action.vector, vector)) {
+    dispatch(movementLimited(action.id, vector, action.vector))
   }
 }

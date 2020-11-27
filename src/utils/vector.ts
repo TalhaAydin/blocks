@@ -40,4 +40,7 @@ export const Movement: Record<string, Vector> = {
   Down: createVector(0, 1),
 }
 
-export const isZeroVector = (vector: Vector) => vector.x === 0 && vector.y === 0
+export const isZeroVector = (vector: Vector): boolean =>
+  vector.x === 0 && vector.y === 0
+
+export const isDownVector = (vector: Vector): boolean => vector.y > 0

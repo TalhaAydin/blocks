@@ -48,6 +48,21 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
           ),
         },
       }
+    case EntitiesActionType.DELETE:
+      const nextState = { ...state }
+      delete nextState[action.id]
+      return nextState
+    case EntitiesActionType.ADD_BLOCKS:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          shape: {
+            ...state[action.id].shape,
+            ...action.blocks,
+          },
+        },
+      }
     default:
       return state
   }
