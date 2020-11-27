@@ -4,7 +4,7 @@ import { getPlacedEntityBlocks } from '../../utils/entities'
 import { EntitiesActionType } from '../actions/entities'
 import { getEntities } from '../selectors/entities'
 import { AllActions } from '../types'
-import { addVector, createVector } from '../../utils/vector'
+import { addVector, createVector, isZeroVector } from '../../utils/vector'
 import { getOutOfBounds, getOverlaps } from '../../utils/point'
 import { createSize } from '../../utils/size'
 
@@ -21,24 +21,29 @@ export const limitMovement: Middleware = ({ getState }) => (next) => (
     getPlacedEntityBlocks(Object.values(restEntityData))
   )
 
-  let resultVector = createVector(0, 0)
-  getBlockPath(action.vector).every((v) => {
-    const nextVector = addVector(resultVector, v)
-    const nextPoints = getPoints(
+  const blockPath = getBlockPath(action.vector)
+
+  const blockPathEndIndex = blockPath.findIndex((_, i, a) => {
+    const points = getPoints(
       getPlacedEntityBlocks({
         ...entityData,
-        position: addVector(entityData.position, nextVector),
+        position: addVector(
+          entityData.position,
+          a.slice(0, i + 1).reduce(addVector, createVector(0, 0))
+        ),
       })
     )
-    if (
-      getOutOfBounds(createSize(10, 20))(nextPoints).length > 0 ||
-      getOverlaps(restPoints)(nextPoints).length > 0
-    ) {
-      return false
-    }
-    resultVector = nextVector
-    return true
+    return (
+      getOutOfBounds(createSize(10, 20))(points).length > 0 ||
+      getOverlaps(restPoints)(points).length > 0
+    )
   })
 
-  return next({ ...action, vector: resultVector })
+  const vector = blockPath
+    .slice(0, blockPathEndIndex === -1 ? undefined : blockPathEndIndex)
+    .reduce(addVector, createVector(0, 0))
+
+  if (!isZeroVector(vector)) {
+    return next({ ...action, vector })
+  }
 }

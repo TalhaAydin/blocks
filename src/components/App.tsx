@@ -20,7 +20,7 @@ export const App = () => {
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
       if (e.code === 'Space') {
-        dispatch(moveEntity('tetromino', createVector(0, 20)))
+        dispatch(moveEntity('tetromino', createVector(0, 25)))
       }
       if (e.code === 'ArrowDown') {
         dispatch(moveEntity('tetromino', Movement.Down))
@@ -42,22 +42,8 @@ export const App = () => {
     })
     dispatch(
       addEntity('pile', {
-        shape: {
-          [getHash(createPoint(0, 0))]: { color: 'grey' },
-          [getHash(createPoint(1, 0))]: { color: 'grey' },
-          [getHash(createPoint(0, -1))]: { color: 'grey' },
-          [getHash(createPoint(0, -2))]: { color: 'grey' },
-          [getHash(createPoint(0, -3))]: { color: 'grey' },
-          [getHash(createPoint(0, -4))]: { color: 'grey' },
-          [getHash(createPoint(-1, 0))]: { color: 'grey' },
-          [getHash(createPoint(-1, -1))]: { color: 'grey' },
-          [getHash(createPoint(-1, -2))]: { color: 'grey' },
-          [getHash(createPoint(-1, -3))]: { color: 'grey' },
-          [getHash(createPoint(-2, 0))]: { color: 'grey' },
-          [getHash(createPoint(-2, -1))]: { color: 'grey' },
-          [getHash(createPoint(-2, -2))]: { color: 'grey' },
-        },
-        position: createVector(5, 19),
+        shape: {},
+        position: createVector(0, 0),
         rotation: 0,
       })
     )

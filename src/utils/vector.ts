@@ -39,3 +39,5 @@ export const Movement: Record<string, Vector> = {
   Up: createVector(0, -1),
   Down: createVector(0, 1),
 }
+
+export const isZeroVector = (vector: Vector) => vector.x === 0 && vector.y === 0
