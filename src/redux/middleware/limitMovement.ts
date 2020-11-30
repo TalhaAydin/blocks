@@ -4,12 +4,7 @@ import { getPlacedEntityBlocks } from '../../utils/entities'
 import { EntitiesActionType, movementLimited } from '../actions/entities'
 import { getEntities } from '../selectors/entities'
 import { AllActions } from '../types'
-import {
-  addVector,
-  createVector,
-  isDownVector,
-  isZeroVector,
-} from '../../utils/vector'
+import { addVector, createVector, isZeroVector } from '../../utils/vector'
 import { getOutOfBounds, getOverlaps } from '../../utils/point'
 import { createSize } from '../../utils/size'
 import { isEqual } from '../../utils/coordinate'
@@ -22,6 +17,10 @@ export const limitMovement: Middleware = ({ dispatch, getState }) => (next) => (
   }
 
   const { [action.id]: entityData, ...restEntityData } = getEntities(getState())
+
+  if (!entityData) {
+    return next(action)
+  }
 
   const restPoints = getPoints(
     getPlacedEntityBlocks(Object.values(restEntityData))

@@ -6,7 +6,7 @@ import {
 } from '../../utils/entities'
 import { getOutOfBounds, getOverlaps } from '../../utils/point'
 import { createSize } from '../../utils/size'
-import { createVector } from '../../utils/vector'
+import { createVector, isZeroVector } from '../../utils/vector'
 import { EntitiesActionType, moveEntity } from '../actions/entities'
 import { getEntities } from '../selectors/entities'
 import { AllActions } from '../types'
@@ -19,6 +19,10 @@ export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
   }
 
   const { [action.id]: entityData, ...restEntityData } = getEntities(getState())
+
+  if (!entityData) {
+    return next(action)
+  }
 
   const placedEntityBlocks = getPlacedEntityBlocks({
     ...entityData,
@@ -45,7 +49,7 @@ export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
       getOutOfBounds(createSize(10, 20))(nextPoints).length === 0 &&
       getOverlaps(restPoints)(nextPoints).length === 0
     ) {
-      if (v.x !== 0 || v.y !== 0) {
+      if (!isZeroVector(v)) {
         dispatch(moveEntity(action.id, v))
       }
       next(action)

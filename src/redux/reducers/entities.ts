@@ -23,6 +23,19 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
   state = initialState,
   action
 ) => {
+  if (
+    [
+      EntitiesActionType.ADD_BLOCKS,
+      EntitiesActionType.DELETE,
+      EntitiesActionType.MOVE,
+      EntitiesActionType.ROTATE,
+    ].includes(action.type) &&
+    !state[action.id]
+  ) {
+    console.warn(`Entity with id '${action.id}' does not exist`)
+    return state
+  }
+
   switch (action.type) {
     case EntitiesActionType.ADD:
       return {
