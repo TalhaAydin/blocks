@@ -7,8 +7,8 @@ import {
   rotateEntity,
 } from '../redux/actions/entities'
 import { getAllBlocks } from '../redux/selectors/entities'
-import { getHash } from '../utils/coordinate'
-import { createPoint, getPoint } from '../utils/point'
+import { createRandomPiece } from '../utils/piece'
+import { getPoint } from '../utils/point'
 import { createVector, Movement } from '../utils/vector'
 import { Block } from './Block'
 import { Field } from './Field'
@@ -47,18 +47,7 @@ export const App = () => {
         rotation: 0,
       })
     )
-    dispatch(
-      addEntity('tetromino', {
-        shape: {
-          [getHash(createPoint(0, 0))]: { color: 'purple' },
-          [getHash(createPoint(-1, 0))]: { color: 'purple' },
-          [getHash(createPoint(1, 0))]: { color: 'purple' },
-          [getHash(createPoint(0, 1))]: { color: 'purple' },
-        },
-        position: createVector(5, 5),
-        rotation: 0,
-      })
-    )
+    dispatch(addEntity('tetromino', createRandomPiece()))
   }, [])
 
   return (
