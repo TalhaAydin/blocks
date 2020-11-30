@@ -1,7 +1,6 @@
 import { StandardLonghandProperties } from 'csstype'
 import { getRadians, rotatePoint } from './angle'
 import { getHash } from './coordinate'
-import { getNumberSequence } from './misc'
 import { createPoint, getPoint, movePoint, Point, PointHash } from './point'
 import { createVector, Vector } from './vector'
 
@@ -23,14 +22,24 @@ export const getPoints = (blocks: Blocks): Point[] =>
 export const mapBlocks = (
   blocks: Blocks,
   mapper: (point: Point, config: BlockConfig) => [Point, BlockConfig]
-) => {
-  return Object.fromEntries(
+) =>
+  Object.fromEntries(
     Object.entries(blocks)
       .map(([h, c]): [Point, BlockConfig] => [getPoint(h), c])
       .map(([p, c]) => mapper(p, c))
       .map(([p, c]) => [getHash(p), c])
   )
-}
+
+export const filterBlocks = (
+  blocks: Blocks,
+  filter: (point: Point, config: BlockConfig) => boolean
+): Blocks =>
+  Object.fromEntries(
+    Object.entries(blocks)
+      .map(([h, c]): [Point, BlockConfig] => [getPoint(h), c])
+      .filter(([p, c]) => filter(p, c))
+      .map(([p, c]) => [getHash(p), c])
+  )
 
 export const rotateBlockPoint = (
   point: Point,

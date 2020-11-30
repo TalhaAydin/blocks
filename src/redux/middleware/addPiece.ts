@@ -10,5 +10,7 @@ export const addPiece: Middleware = ({ dispatch, getState }) => (next) => (
     return next(action)
   }
 
+  next(action)
+
   dispatch(addEntity(action.id, createRandomPiece()))
 }

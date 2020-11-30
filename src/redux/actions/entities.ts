@@ -1,5 +1,6 @@
 import { Action } from 'redux'
 import { Blocks } from '../../utils/blocks'
+import { Point } from '../../utils/point'
 import { Vector } from '../../utils/vector'
 import { EntityData, EntityID } from '../reducers/entities'
 
@@ -15,6 +16,7 @@ export enum EntitiesActionType {
   MOVE = 'ENTITIES_MOVE',
   ROTATE = 'ENTITIES_ROTATE',
   ADD_BLOCKS = 'ENTITIES_ADD_BLOCKS',
+  DELETE_BLOCKS = 'ENTITIES_DELETE_BLOCKS',
   DELETE = 'ENTITIES_DELETE',
   MOVEMENT_LIMITED = 'ENTITIES_MOVEMENT_LIMITED',
 }
@@ -39,6 +41,12 @@ export interface AddBlocksAction extends Action<EntitiesActionType.ADD_BLOCKS> {
   blocks: Blocks
 }
 
+export interface DeleteBlocksAction
+  extends Action<EntitiesActionType.DELETE_BLOCKS> {
+  id: EntityID
+  points: Point[]
+}
+
 export interface DeleteEntityAction extends Action<EntitiesActionType.DELETE> {
   id: EntityID
 }
@@ -55,6 +63,7 @@ export type EntitiesActions =
   | MoveEntityAction
   | RotateEntityAction
   | AddBlocksAction
+  | DeleteBlocksAction
   | DeleteEntityAction
   | EntityMovementLimitedAction
 
@@ -85,6 +94,15 @@ export const addBlocks = (id: EntityID, blocks: Blocks): AddBlocksAction => ({
   type: EntitiesActionType.ADD_BLOCKS,
   id,
   blocks,
+})
+
+export const deleteBlocks = (
+  id: EntityID,
+  points: Point[]
+): DeleteBlocksAction => ({
+  type: EntitiesActionType.DELETE_BLOCKS,
+  id,
+  points,
 })
 
 export const deleteEntity = (id: EntityID): DeleteEntityAction => ({

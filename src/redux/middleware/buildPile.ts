@@ -1,5 +1,4 @@
 import { Middleware } from 'redux'
-import { mapBlocks } from '../../utils/blocks'
 import { getPlacedEntityBlocks } from '../../utils/entities'
 import { isDownVector } from '../../utils/vector'
 import {
@@ -21,16 +20,10 @@ export const buildPile: Middleware = ({ dispatch, getState }) => (next) => (
     return next(action)
   }
 
+  next(action)
+
   const entityData = getEntityData(action.id)(getState())
   const blocks = getPlacedEntityBlocks(entityData)
   dispatch(deleteEntity(action.id))
-  dispatch(
-    addBlocks(
-      'pile',
-      mapBlocks(blocks, (point, config) => [
-        point,
-        { ...config, color: 'gray' },
-      ])
-    )
-  )
+  dispatch(addBlocks('pile', blocks))
 }
