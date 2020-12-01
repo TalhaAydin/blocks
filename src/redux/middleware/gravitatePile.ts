@@ -22,7 +22,7 @@ export const gravitatePile: Middleware = ({ dispatch, getState }) => (next) => (
   const currentRows = groupByRow(entityData.shape)
   const currentRowKeys = Object.keys(currentRows)
     .map((k) => parseInt(k, 10))
-    .sort()
+    .sort((a, b) => a - b)
   const currentRowCount = currentRowKeys.length
 
   const newBlocks = getNumberSequence(
