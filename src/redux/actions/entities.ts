@@ -17,6 +17,7 @@ export enum EntitiesActionType {
   ROTATE = 'ENTITIES_ROTATE',
   ADD_BLOCKS = 'ENTITIES_ADD_BLOCKS',
   DELETE_BLOCKS = 'ENTITIES_DELETE_BLOCKS',
+  SET_BLOCKS = 'ENTITIES_SET_BLOCKS',
   DELETE = 'ENTITIES_DELETE',
   MOVEMENT_LIMITED = 'ENTITIES_MOVEMENT_LIMITED',
 }
@@ -47,6 +48,11 @@ export interface DeleteBlocksAction
   points: Point[]
 }
 
+export interface SetBlocksAction extends Action<EntitiesActionType.SET_BLOCKS> {
+  id: EntityID
+  blocks: Blocks
+}
+
 export interface DeleteEntityAction extends Action<EntitiesActionType.DELETE> {
   id: EntityID
 }
@@ -64,6 +70,7 @@ export type EntitiesActions =
   | RotateEntityAction
   | AddBlocksAction
   | DeleteBlocksAction
+  | SetBlocksAction
   | DeleteEntityAction
   | EntityMovementLimitedAction
 
@@ -92,6 +99,12 @@ export const rotateEntity = (
 
 export const addBlocks = (id: EntityID, blocks: Blocks): AddBlocksAction => ({
   type: EntitiesActionType.ADD_BLOCKS,
+  id,
+  blocks,
+})
+
+export const setBlocks = (id: EntityID, blocks: Blocks): SetBlocksAction => ({
+  type: EntitiesActionType.SET_BLOCKS,
   id,
   blocks,
 })

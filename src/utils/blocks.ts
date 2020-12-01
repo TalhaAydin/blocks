@@ -57,3 +57,18 @@ export const getBlockPath = (vector: Vector): Vector[] => [
     .fill(0)
     .map(() => createVector(0, vector.y > 0 ? 1 : -1)),
 ]
+
+export const groupByRow = (blocks: Blocks): Record<number, Blocks> =>
+  Object.entries(blocks).reduce<Record<number, Blocks>>(
+    (result, [pointHash, blockConfig]) => {
+      const point = getPoint(pointHash)
+      return {
+        ...result,
+        [point.y]: {
+          ...(result[point.y] || {}),
+          [getHash(point)]: blockConfig,
+        },
+      }
+    },
+    {}
+  )

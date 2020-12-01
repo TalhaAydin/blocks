@@ -6,10 +6,18 @@ import { fixRotation } from './middleware/fixRotation'
 import { buildPile } from './middleware/buildPile'
 import { addPiece } from './middleware/addPiece'
 import { clearLines } from './middleware/clearLines'
+import { gravitatePile } from './middleware/gravitatePile'
 
 export const store = createStore(
   rootReducer,
   composeWithDevTools(
-    applyMiddleware(limitMovement, fixRotation, buildPile, addPiece, clearLines)
+    applyMiddleware(
+      limitMovement,
+      fixRotation,
+      buildPile,
+      addPiece,
+      clearLines,
+      gravitatePile
+    )
   )
 )

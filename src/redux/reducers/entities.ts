@@ -27,6 +27,7 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
   if (
     [
       EntitiesActionType.ADD_BLOCKS,
+      EntitiesActionType.SET_BLOCKS,
       EntitiesActionType.DELETE_BLOCKS,
       EntitiesActionType.DELETE,
       EntitiesActionType.MOVE,
@@ -88,6 +89,14 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
             state[action.id].shape,
             (point) => !pointHashes.includes(getHash(point))
           ),
+        },
+      }
+    case EntitiesActionType.SET_BLOCKS:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          shape: action.blocks,
         },
       }
     default:
