@@ -11,6 +11,7 @@ export const Field: React.FC<FieldProps> = ({ width, height, children }) => {
         display: 'grid',
         gridTemplateColumns: `repeat(${width}, 20px)`,
         gridTemplateRows: `repeat(${height}, 20px)`,
+        gap: '1px 1px',
       }}
     >
       {children}

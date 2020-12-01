@@ -61,8 +61,7 @@ export const App = () => {
     >
       <div
         style={{
-          width: '200px',
-          height: '400px',
+          display: 'inline-block',
           borderLeft: 'solid 5px black',
           borderRight: 'solid 5px black',
           borderBottom: 'solid 5px black',
