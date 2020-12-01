@@ -12,6 +12,7 @@ export const Block: React.FC<BlockProps> = ({ color, x, y }) => {
       data-testid="game.block"
       style={{
         boxSizing: 'border-box',
+        border: 'solid 1px black',
         backgroundColor: color,
         width: '100%',
         height: '100%',
