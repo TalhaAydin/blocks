@@ -8,9 +8,10 @@ export const Field: React.FC<FieldProps> = ({ width, height, children }) => {
     <div
       data-testid="game.field"
       style={{
+        height: '100%',
         display: 'grid',
-        gridTemplateColumns: `repeat(${width}, 20px)`,
-        gridTemplateRows: `repeat(${height}, 20px)`,
+        gridTemplateColumns: `repeat(${width}, 1fr)`,
+        gridTemplateRows: `repeat(${height}, 1fr)`,
         gap: '1px 1px',
       }}
     >

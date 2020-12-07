@@ -6,16 +6,23 @@ import {
   moveEntity,
   rotateEntity,
 } from '../redux/actions/entities'
+import { addMessage } from '../redux/actions/messages'
 import { getAllBlocks } from '../redux/selectors/entities'
+import { gameMessages } from '../utils/messages'
 import { createRandomPiece } from '../utils/piece'
 import { getPoint } from '../utils/point'
 import { createVector, Movement } from '../utils/vector'
 import { Block } from './Block'
+import { Console } from './Console'
 import { Field } from './Field'
 
 export const App = () => {
   const dispatch = useDispatch()
   const allBlocks = useSelector(getAllBlocks)
+
+  useEffect(() => {
+    dispatch(addMessage({ content: gameMessages.pending }))
+  }, [])
 
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
@@ -54,17 +61,12 @@ export const App = () => {
     <div
       style={{
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
         height: '100%',
       }}
     >
       <div
         style={{
-          display: 'inline-block',
-          borderLeft: 'solid 5px black',
-          borderRight: 'solid 5px black',
-          borderBottom: 'solid 5px black',
+          flex: '0 0 50vh',
         }}
       >
         <Field width={10} height={20}>
@@ -80,6 +82,13 @@ export const App = () => {
             )
           })}
         </Field>
+      </div>
+      <div
+        style={{
+          flex: '1 1 auto',
+        }}
+      >
+        <Console />
       </div>
     </div>
   )
