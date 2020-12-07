@@ -6,8 +6,11 @@ import {
   moveEntity,
   rotateEntity,
 } from '../redux/actions/entities'
+import { setStatus } from '../redux/actions/game'
 import { addMessage } from '../redux/actions/messages'
+import { GameStatus } from '../redux/reducers/game'
 import { getAllBlocks } from '../redux/selectors/entities'
+import { getStatus } from '../redux/selectors/game'
 import { gameMessages } from '../utils/messages'
 import { createRandomPiece } from '../utils/piece'
 import { getPoint } from '../utils/point'
@@ -19,13 +22,30 @@ import { Field } from './Field'
 export const App = () => {
   const dispatch = useDispatch()
   const allBlocks = useSelector(getAllBlocks)
+  const gameStatus = useSelector(getStatus)
 
   useEffect(() => {
     dispatch(addMessage({ content: gameMessages.pending }))
   }, [])
 
   useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.code === 'F1') {
+        e.preventDefault()
+        dispatch(setStatus(GameStatus.ACTIVE))
+      }
+    }
+    if (gameStatus === GameStatus.PENDING) {
+      document.addEventListener('keydown', handler)
+    }
+    return () => {
+      document.removeEventListener('keydown', handler)
+    }
+  }, [gameStatus, dispatch])
+
+  useEffect(() => {
     document.addEventListener('keydown', (e) => {
+      console.log(e.code)
       if (e.code === 'Space') {
         dispatch(moveEntity('tetromino', createVector(0, 25)))
       }
@@ -55,7 +75,7 @@ export const App = () => {
       })
     )
     dispatch(addEntity('tetromino', createRandomPiece()))
-  }, [])
+  }, [dispatch])
 
   return (
     <div
