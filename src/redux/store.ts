@@ -9,6 +9,7 @@ import { clearLines } from './middleware/clearLines'
 import { gravitatePile } from './middleware/gravitatePile'
 import { descendPiece } from './middleware/descendPiece'
 import { logStatusMessage } from './middleware/logMessage'
+import { addPile } from './middleware/addPile'
 
 export const store = createStore(
   rootReducer,
@@ -21,7 +22,8 @@ export const store = createStore(
       clearLines,
       gravitatePile,
       descendPiece,
-      logStatusMessage
+      logStatusMessage,
+      addPile
     )
   )
 )

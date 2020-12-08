@@ -2,14 +2,14 @@ import { useEffect } from 'react'
 
 export const useKey = (
   keyCode: string,
-  action: () => void,
+  action: (e: KeyboardEvent) => void,
   enabled: boolean
 ) => {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.code === keyCode) {
         e.preventDefault()
-        action()
+        action(e)
       }
     }
     if (enabled) {

@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useKey } from '../hooks/useKey'
 import {
-  addEntity,
   EntityRotationDirection,
   moveEntity,
   rotateEntity,
@@ -12,8 +11,8 @@ import { addMessage } from '../redux/actions/messages'
 import { GameStatus } from '../redux/reducers/game'
 import { getAllBlocks } from '../redux/selectors/entities'
 import { getStatus } from '../redux/selectors/game'
+import { isGameInProgress } from '../utils/game'
 import { gameMessages } from '../utils/messages'
-import { createRandomPiece } from '../utils/piece'
 import { getPoint } from '../utils/point'
 import { createVector, Movement } from '../utils/vector'
 import { Block } from './Block'
@@ -45,7 +44,7 @@ export const App = () => {
             : GameStatus.ACTIVE
         )
       ),
-    gameStatus === GameStatus.ACTIVE || gameStatus === GameStatus.PAUSED
+    isGameInProgress(gameStatus)
   )
 
   useKey(
@@ -60,41 +59,41 @@ export const App = () => {
     gameStatus === GameStatus.OVER
   )
 
-  /*
-  useEffect(() => {
-    document.addEventListener('keydown', (e) => {
-      console.log(e.code)
-      if (e.code === 'Space') {
-        dispatch(moveEntity('tetromino', createVector(0, 25)))
-      }
-      if (e.code === 'ArrowDown') {
-        dispatch(moveEntity('tetromino', Movement.Down))
-      }
-      if (e.code === 'ArrowLeft') {
-        dispatch(moveEntity('tetromino', Movement.Left))
-      }
-      if (e.code === 'ArrowRight') {
-        dispatch(moveEntity('tetromino', Movement.Right))
-      }
-      if (e.code === 'ArrowUp') {
-        dispatch(
-          rotateEntity(
-            'tetromino',
-            EntityRotationDirection[e.ctrlKey ? 'Left' : 'Right']
-          )
+  useKey(
+    'Space',
+    () => dispatch(moveEntity('piece', createVector(0, 25))),
+    gameStatus === GameStatus.ACTIVE
+  )
+
+  useKey(
+    'ArrowDown',
+    () => dispatch(moveEntity('piece', Movement.Down)),
+    gameStatus === GameStatus.ACTIVE
+  )
+
+  useKey(
+    'ArrowLeft',
+    () => dispatch(moveEntity('piece', Movement.Left)),
+    gameStatus === GameStatus.ACTIVE
+  )
+
+  useKey(
+    'ArrowRight',
+    () => dispatch(moveEntity('piece', Movement.Right)),
+    gameStatus === GameStatus.ACTIVE
+  )
+
+  useKey(
+    'ArrowUp',
+    (e) =>
+      dispatch(
+        rotateEntity(
+          'piece',
+          EntityRotationDirection[e.ctrlKey ? 'Left' : 'Right']
         )
-      }
-    })
-    dispatch(
-      addEntity('pile', {
-        shape: {},
-        position: createVector(0, 0),
-        rotation: 0,
-      })
-    )
-    dispatch(addEntity('tetromino', createRandomPiece()))
-  }, [dispatch])
-  */
+      ),
+    gameStatus === GameStatus.ACTIVE
+  )
 
   return (
     <div
