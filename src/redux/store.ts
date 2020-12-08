@@ -7,6 +7,7 @@ import { buildPile } from './middleware/buildPile'
 import { addPiece } from './middleware/addPiece'
 import { clearLines } from './middleware/clearLines'
 import { gravitatePile } from './middleware/gravitatePile'
+import { descendPiece } from './middleware/descendPiece'
 
 export const store = createStore(
   rootReducer,
@@ -17,7 +18,8 @@ export const store = createStore(
       buildPile,
       addPiece,
       clearLines,
-      gravitatePile
+      gravitatePile,
+      descendPiece
     )
   )
 )
