@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useKey } from '../hooks/useKey'
 import {
   addEntity,
   EntityRotationDirection,
@@ -28,21 +29,38 @@ export const App = () => {
     dispatch(addMessage({ content: gameMessages.pending }))
   }, [])
 
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.code === 'F1') {
-        e.preventDefault()
-        dispatch(setStatus(GameStatus.ACTIVE))
-      }
-    }
-    if (gameStatus === GameStatus.PENDING) {
-      document.addEventListener('keydown', handler)
-    }
-    return () => {
-      document.removeEventListener('keydown', handler)
-    }
-  }, [gameStatus, dispatch])
+  useKey(
+    'Enter',
+    () => dispatch(setStatus(GameStatus.ACTIVE)),
+    gameStatus === GameStatus.PENDING
+  )
 
+  useKey(
+    'KeyP',
+    () =>
+      dispatch(
+        setStatus(
+          gameStatus === GameStatus.ACTIVE
+            ? GameStatus.PAUSED
+            : GameStatus.ACTIVE
+        )
+      ),
+    gameStatus === GameStatus.ACTIVE || gameStatus === GameStatus.PAUSED
+  )
+
+  useKey(
+    'Escape',
+    () => dispatch(setStatus(GameStatus.OVER)),
+    gameStatus === GameStatus.ACTIVE
+  )
+
+  useKey(
+    'F1',
+    () => dispatch(setStatus(GameStatus.ACTIVE)),
+    gameStatus === GameStatus.OVER
+  )
+
+  /*
   useEffect(() => {
     document.addEventListener('keydown', (e) => {
       console.log(e.code)
@@ -76,6 +94,7 @@ export const App = () => {
     )
     dispatch(addEntity('tetromino', createRandomPiece()))
   }, [dispatch])
+  */
 
   return (
     <div

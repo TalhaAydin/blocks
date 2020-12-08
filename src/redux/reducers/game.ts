@@ -4,6 +4,7 @@ import { GameActions, GameActionType } from '../actions/game'
 export enum GameStatus {
   PENDING,
   ACTIVE,
+  PAUSED,
   OVER,
 }
 
