@@ -56,7 +56,7 @@ export const App = () => {
 
   useKey(
     'F1',
-    () => dispatch(setStatus(GameStatus.ACTIVE)),
+    () => dispatch(setStatus(GameStatus.PENDING)),
     gameStatus === GameStatus.OVER
   )
 
