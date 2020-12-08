@@ -20,6 +20,7 @@ export enum EntitiesActionType {
   SET_BLOCKS = 'ENTITIES_SET_BLOCKS',
   DELETE = 'ENTITIES_DELETE',
   MOVEMENT_LIMITED = 'ENTITIES_MOVEMENT_LIMITED',
+  RESET = 'ENTITIES_RESET',
 }
 
 export interface AddEntityAction extends Action<EntitiesActionType.ADD> {
@@ -57,6 +58,8 @@ export interface DeleteEntityAction extends Action<EntitiesActionType.DELETE> {
   id: EntityID
 }
 
+export interface ResetEntityAction extends Action<EntitiesActionType.RESET> {}
+
 export interface EntityMovementLimitedAction
   extends Action<EntitiesActionType.MOVEMENT_LIMITED> {
   id: EntityID
@@ -73,6 +76,7 @@ export type EntitiesActions =
   | SetBlocksAction
   | DeleteEntityAction
   | EntityMovementLimitedAction
+  | ResetEntityAction
 
 // implementations
 
@@ -121,6 +125,10 @@ export const deleteBlocks = (
 export const deleteEntity = (id: EntityID): DeleteEntityAction => ({
   type: EntitiesActionType.DELETE,
   id,
+})
+
+export const resetEntities = (): ResetEntityAction => ({
+  type: EntitiesActionType.RESET,
 })
 
 export const movementLimited = (

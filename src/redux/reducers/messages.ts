@@ -16,6 +16,8 @@ export const messagesReducer: Reducer<MessagesState, MessagesActions> = (
   switch (action.type) {
     case MessagesActionType.ADD:
       return [...state, action.message]
+    case MessagesActionType.RESET:
+      return initialState
     default:
       return state
   }

@@ -33,6 +33,11 @@ export const gameReducer: Reducer<GameState, GameActions> = (
         ...state,
         linesCleared: state.linesCleared + action.count,
       }
+    case GameActionType.RESET_CLEARED_LINES:
+      return {
+        ...state,
+        linesCleared: 0,
+      }
     default:
       return state
   }

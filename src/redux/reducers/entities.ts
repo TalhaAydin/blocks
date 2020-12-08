@@ -25,14 +25,8 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
   action
 ) => {
   if (
-    [
-      EntitiesActionType.ADD_BLOCKS,
-      EntitiesActionType.SET_BLOCKS,
-      EntitiesActionType.DELETE_BLOCKS,
-      EntitiesActionType.DELETE,
-      EntitiesActionType.MOVE,
-      EntitiesActionType.ROTATE,
-    ].includes(action.type) &&
+    action.type !== EntitiesActionType.ADD &&
+    action.type !== EntitiesActionType.RESET &&
     !state[action.id]
   ) {
     console.warn(`Entity with id '${action.id}' does not exist`)
@@ -99,6 +93,8 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
           shape: action.blocks,
         },
       }
+    case EntitiesActionType.RESET:
+      return initialState
     default:
       return state
   }
