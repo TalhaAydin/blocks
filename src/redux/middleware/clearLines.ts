@@ -1,6 +1,5 @@
 import { Middleware } from 'redux'
 import { Blocks, getPoints, groupByRow } from '../../utils/blocks'
-import { Point } from '../../utils/point'
 import { deleteBlocks, EntitiesActionType } from '../actions/entities'
 import { getEntityData } from '../selectors/entities'
 import { AllActions } from '../types'
@@ -15,6 +14,10 @@ export const clearLines: Middleware = ({ dispatch, getState }) => (next) => (
   next(action)
 
   const entityData = getEntityData(action.id)(getState())
+
+  if (!entityData) {
+    return
+  }
 
   const fullLineBlocks: Blocks = Object.values(groupByRow(entityData.shape))
     .filter((points) => Object.keys(points).length === 10)

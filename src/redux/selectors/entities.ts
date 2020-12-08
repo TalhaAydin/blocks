@@ -7,7 +7,10 @@ import { getPlacedEntityBlocks } from '../../utils/entities'
 export const getEntities = (state: RootState): EntitiesState => state.entities
 
 export const getEntityData = (id: EntityID) =>
-  createSelector(getEntities, (entities): EntityData => entities[id])
+  createSelector(
+    getEntities,
+    (entities): EntityData | undefined => entities[id]
+  )
 
 export const getAllBlocks = createSelector(
   getEntities,

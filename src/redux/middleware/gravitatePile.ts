@@ -19,6 +19,10 @@ export const gravitatePile: Middleware = ({ dispatch, getState }) => (next) => (
   const size = createSize(10, 20)
   const entityData = getEntityData(action.id)(getState())
 
+  if (!entityData) {
+    return
+  }
+
   const currentRows = groupByRow(entityData.shape)
   const currentRowKeys = Object.keys(currentRows)
     .map((k) => parseInt(k, 10))

@@ -23,6 +23,11 @@ export const buildPile: Middleware = ({ dispatch, getState }) => (next) => (
   next(action)
 
   const entityData = getEntityData(action.id)(getState())
+
+  if (!entityData) {
+    return
+  }
+
   const blocks = getPlacedEntityBlocks(entityData)
   dispatch(deleteEntity(action.id))
   dispatch(addBlocks('pile', blocks))

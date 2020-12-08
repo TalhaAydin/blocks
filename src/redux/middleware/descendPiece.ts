@@ -22,7 +22,7 @@ export const descendPiece: Middleware = ({ dispatch }) => (next) => (
   }
 
   intervalId = window.setInterval(
-    () => dispatch(moveEntity('tetromino', Movement.Down)),
+    () => dispatch(moveEntity('piece', Movement.Down)),
     1000
   )
 }
