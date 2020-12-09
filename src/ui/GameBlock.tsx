@@ -1,12 +1,12 @@
 import { StandardLonghandProperties } from 'csstype'
 
-export interface BlockProps {
+export interface GameBlockProps {
   color: StandardLonghandProperties['backgroundColor']
   x: number
   y: number
 }
 
-export const Block: React.FC<BlockProps> = ({ color, x, y }) => {
+export const GameBlock: React.FC<GameBlockProps> = ({ color, x, y }) => {
   return (
     <div
       data-testid="game.block"

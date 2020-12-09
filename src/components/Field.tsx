@@ -1,21 +1,27 @@
-interface FieldProps {
-  width: number
-  height: number
-}
+import { GameGrid } from '../ui/GameGrid'
+import { GameBlock } from '../ui/GameBlock'
+import { useSelector } from 'react-redux'
+import { getAllBlocks } from '../redux/selectors/entities'
+import { getPoint } from '../utils/point'
+import { useKeyboardControls } from '../hooks/useKeyboardControls'
 
-export const Field: React.FC<FieldProps> = ({ width, height, children }) => {
+export const Field: React.FC = () => {
+  const allBlocks = useSelector(getAllBlocks)
+  useKeyboardControls()
+
   return (
-    <div
-      data-testid="game.field"
-      style={{
-        height: '100%',
-        display: 'grid',
-        gridTemplateColumns: `repeat(${width}, 1fr)`,
-        gridTemplateRows: `repeat(${height}, 1fr)`,
-        gap: '1px 1px',
-      }}
-    >
-      {children}
-    </div>
+    <GameGrid width={10} height={20}>
+      {Object.entries(allBlocks).map(([blockPointHash, blockConfig]) => {
+        const p = getPoint(blockPointHash)
+        return (
+          <GameBlock
+            key={blockPointHash}
+            color={blockConfig.color}
+            x={p.x}
+            y={p.y}
+          />
+        )
+      })}
+    </GameGrid>
   )
 }
