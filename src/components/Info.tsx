@@ -63,24 +63,24 @@ export const Info: React.FC = () => {
       <InfoSection header="Statistics">
         <InfoTable>
           <Row>
-            <Header>Total line clears</Header>
-            <Cell>{totalLinesCleared}</Cell>
-          </Row>
-          <Row>
             <Header>1-Line clears</Header>
-            <Cell>{singleLineClears}</Cell>
+            <Cell>{singleLineClears} x 1</Cell>
           </Row>
           <Row>
             <Header>2-Line clears</Header>
-            <Cell>{doubleLineClears}</Cell>
+            <Cell>{doubleLineClears} x 2</Cell>
           </Row>
           <Row>
             <Header>3-Line clears</Header>
-            <Cell>{tripleLineClears}</Cell>
+            <Cell>{tripleLineClears} x 3</Cell>
           </Row>
           <Row>
             <Header>4-Line clears</Header>
-            <Cell>{quadLineClears}</Cell>
+            <Cell>{quadLineClears} x 4</Cell>
+          </Row>
+          <Row>
+            <Header>Total lines cleared</Header>
+            <Cell>{totalLinesCleared}</Cell>
           </Row>
         </InfoTable>
       </InfoSection>
