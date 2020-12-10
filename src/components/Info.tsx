@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import { GameStatus } from '../redux/reducers/game'
 import { getStatus, getLinesCleared } from '../redux/selectors/game'
 import { InfoGlossary } from '../ui/InfoGlossary'
 import { InfoGlossaryEntry as Entry } from '../ui/InfoGlossaryEntry'
@@ -72,7 +73,9 @@ export const Info: React.FC = () => {
           />
           <Entry
             term="⌨ P"
-            details="Pause / unpause game"
+            details={`${
+              gameStatus === GameStatus.PAUSED ? 'Unpause' : 'Pause'
+            } game`}
             enabled={isGamePausable(gameStatus)}
           />
           <Entry
