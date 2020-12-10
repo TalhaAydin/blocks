@@ -7,7 +7,13 @@ import {
 import { setStatus } from '../redux/actions/game'
 import { GameStatus } from '../redux/reducers/game'
 import { getStatus } from '../redux/selectors/game'
-import { isGameInProgress } from '../utils/game'
+import {
+  isGamePausable,
+  isGameStartable,
+  isGameEndable,
+  isGameCreatable,
+  isPieceControllable,
+} from '../utils/controls'
 import { createVector, Movement } from '../utils/vector'
 import { useKey } from './useKey'
 
@@ -18,7 +24,7 @@ export const useKeyboardControls = () => {
   useKey(
     'Enter',
     () => dispatch(setStatus(GameStatus.ACTIVE)),
-    gameStatus === GameStatus.PENDING
+    isGameStartable(gameStatus)
   )
 
   useKey(
@@ -31,43 +37,43 @@ export const useKeyboardControls = () => {
             : GameStatus.ACTIVE
         )
       ),
-    isGameInProgress(gameStatus)
+    isGamePausable(gameStatus)
   )
 
   useKey(
     'Escape',
     () => dispatch(setStatus(GameStatus.OVER)),
-    gameStatus === GameStatus.ACTIVE
+    isGameEndable(gameStatus)
   )
 
   useKey(
     'F1',
     () => dispatch(setStatus(GameStatus.PENDING)),
-    gameStatus === GameStatus.OVER
+    isGameCreatable(gameStatus)
   )
 
   useKey(
     'Space',
     () => dispatch(moveEntity('piece', createVector(0, 25))),
-    gameStatus === GameStatus.ACTIVE
+    isPieceControllable(gameStatus)
   )
 
   useKey(
     'ArrowDown',
     () => dispatch(moveEntity('piece', Movement.Down)),
-    gameStatus === GameStatus.ACTIVE
+    isPieceControllable(gameStatus)
   )
 
   useKey(
     'ArrowLeft',
     () => dispatch(moveEntity('piece', Movement.Left)),
-    gameStatus === GameStatus.ACTIVE
+    isPieceControllable(gameStatus)
   )
 
   useKey(
     'ArrowRight',
     () => dispatch(moveEntity('piece', Movement.Right)),
-    gameStatus === GameStatus.ACTIVE
+    isPieceControllable(gameStatus)
   )
 
   useKey(
@@ -79,6 +85,6 @@ export const useKeyboardControls = () => {
           EntityRotationDirection[e.ctrlKey ? 'Left' : 'Right']
         )
       ),
-    gameStatus === GameStatus.ACTIVE
+    isPieceControllable(gameStatus)
   )
 }

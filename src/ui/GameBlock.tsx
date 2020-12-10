@@ -13,7 +13,6 @@ export const GameBlock: React.FC<GameBlockProps> = ({ color, x, y }) => {
       style={{
         boxSizing: 'border-box',
         border: 'solid 1px black',
-        borderRadius: '2px',
         backgroundColor: color,
         width: '100%',
         height: '100%',

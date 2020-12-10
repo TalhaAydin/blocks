@@ -2,10 +2,10 @@ import { Reducer } from 'redux'
 import { GameActions, GameActionType } from '../actions/game'
 
 export enum GameStatus {
-  PENDING,
-  ACTIVE,
-  PAUSED,
-  OVER,
+  PENDING = 'Game Pending',
+  ACTIVE = 'Game Active',
+  PAUSED = 'Game Paused',
+  OVER = 'Game Over',
 }
 
 export interface GameState {

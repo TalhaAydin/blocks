@@ -1,6 +1,7 @@
 import { Middleware } from 'redux'
 import { Blocks, getPoints, groupByRow } from '../../utils/blocks'
 import { deleteBlocks, EntitiesActionType } from '../actions/entities'
+import { addClearedLines } from '../actions/game'
 import { getEntityData } from '../selectors/entities'
 import { AllActions } from '../types'
 
@@ -27,5 +28,6 @@ export const clearLines: Middleware = ({ dispatch, getState }) => (next) => (
 
   if (fullLinePoints.length > 0) {
     dispatch(deleteBlocks(action.id, fullLinePoints))
+    dispatch(addClearedLines(fullLinePoints.length / 10))
   }
 }
