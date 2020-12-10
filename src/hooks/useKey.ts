@@ -9,12 +9,12 @@ export const useKey = (
     const handler = (e: KeyboardEvent) => {
       if (e.code === keyCode) {
         e.preventDefault()
-        action(e)
+        if (enabled) {
+          action(e)
+        }
       }
     }
-    if (enabled) {
-      document.addEventListener('keydown', handler)
-    }
+    document.addEventListener('keydown', handler)
     return () => {
       document.removeEventListener('keydown', handler)
     }
