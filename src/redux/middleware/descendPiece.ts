@@ -5,7 +5,13 @@ import { GameActionType } from '../actions/game'
 import { GameStatus } from '../reducers/game'
 import { AllActions } from '../types'
 
-let intervalId: number
+export interface IntervalState {
+  id?: number
+}
+
+export const intervalState: IntervalState = {
+  id: undefined,
+}
 
 export const descendPiece: Middleware = ({ dispatch }) => (next) => (
   action: AllActions
@@ -17,11 +23,11 @@ export const descendPiece: Middleware = ({ dispatch }) => (next) => (
   next(action)
 
   if (action.status !== GameStatus.ACTIVE) {
-    window.clearInterval(intervalId)
+    window.clearInterval(intervalState.id)
     return
   }
 
-  intervalId = window.setInterval(
+  intervalState.id = window.setInterval(
     () => dispatch(moveEntity('piece', Movement.Down)),
     1000
   )
