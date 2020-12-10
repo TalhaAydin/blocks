@@ -5,8 +5,8 @@ import { GameStatus } from '../reducers/game'
 
 export enum GameActionType {
   SET_STATUS = 'GAME_SET_STATUS',
-  ADD_CLEARED_LINES = 'GAME_ADD_LINES_CLEARED',
-  RESET_CLEARED_LINES = 'GAME_RESET_LINES_CLEARED',
+  ADD_LINE_CLEAR = 'GAME_ADD_LINE_CLEAR',
+  RESET_LINE_CLEARS = 'GAME_RESET_LINE_CLEARS',
 }
 
 export interface SetStatusGameAction extends Action<GameActionType.SET_STATUS> {
@@ -14,12 +14,12 @@ export interface SetStatusGameAction extends Action<GameActionType.SET_STATUS> {
 }
 
 export interface AddClearedLinesGameAction
-  extends Action<GameActionType.ADD_CLEARED_LINES> {
+  extends Action<GameActionType.ADD_LINE_CLEAR> {
   count: number
 }
 
 export interface ResetClearedLinesGameAction
-  extends Action<GameActionType.RESET_CLEARED_LINES> {}
+  extends Action<GameActionType.RESET_LINE_CLEARS> {}
 
 export type GameActions =
   | SetStatusGameAction
@@ -34,10 +34,10 @@ export const setStatus = (status: GameStatus): SetStatusGameAction => ({
 })
 
 export const addClearedLines = (count: number): AddClearedLinesGameAction => ({
-  type: GameActionType.ADD_CLEARED_LINES,
+  type: GameActionType.ADD_LINE_CLEAR,
   count,
 })
 
 export const resetClearedLines = (): ResetClearedLinesGameAction => ({
-  type: GameActionType.RESET_CLEARED_LINES,
+  type: GameActionType.RESET_LINE_CLEARS,
 })

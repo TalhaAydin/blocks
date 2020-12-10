@@ -10,12 +10,12 @@ export enum GameStatus {
 
 export interface GameState {
   status: GameStatus
-  linesCleared: number
+  lineClears: number[]
 }
 
 const initialState: GameState = {
   status: GameStatus.PENDING,
-  linesCleared: 0,
+  lineClears: [],
 }
 
 export const gameReducer: Reducer<GameState, GameActions> = (
@@ -28,15 +28,15 @@ export const gameReducer: Reducer<GameState, GameActions> = (
         ...state,
         status: action.status,
       }
-    case GameActionType.ADD_CLEARED_LINES:
+    case GameActionType.ADD_LINE_CLEAR:
       return {
         ...state,
-        linesCleared: state.linesCleared + action.count,
+        lineClears: [...state.lineClears, action.count],
       }
-    case GameActionType.RESET_CLEARED_LINES:
+    case GameActionType.RESET_LINE_CLEARS:
       return {
         ...state,
-        linesCleared: 0,
+        lineClears: [],
       }
     default:
       return state

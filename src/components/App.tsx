@@ -1,7 +1,7 @@
 import { Field } from './Field'
 import { Info } from './Info'
 
-export const App = () => {
+export const App: React.FC = () => {
   return (
     <div
       style={{

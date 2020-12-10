@@ -6,7 +6,12 @@ export const getGame = (state: RootState): GameState => state.game
 
 export const getStatus = createSelector(getGame, (game) => game.status)
 
-export const getLinesCleared = createSelector(
-  getGame,
-  (game) => game.linesCleared
+export const getLineClearsCount = (lineCount: number) =>
+  createSelector(
+    getGame,
+    (game) => game.lineClears.filter((l) => l === lineCount).length
+  )
+
+export const getTotalLinesCleared = createSelector(getGame, (game) =>
+  game.lineClears.reduce((r, c) => r + c, 0)
 )

@@ -1,6 +1,10 @@
 import { useSelector } from 'react-redux'
 import { GameStatus } from '../redux/reducers/game'
-import { getStatus, getLinesCleared } from '../redux/selectors/game'
+import {
+  getLineClearsCount,
+  getStatus,
+  getTotalLinesCleared,
+} from '../redux/selectors/game'
 import { InfoGlossary } from '../ui/InfoGlossary'
 import { InfoGlossaryEntry as Entry } from '../ui/InfoGlossaryEntry'
 import { InfoScreen } from '../ui/InfoScreen'
@@ -19,7 +23,12 @@ import {
 
 export const Info: React.FC = () => {
   const gameStatus = useSelector(getStatus)
-  const linesCleared = useSelector(getLinesCleared)
+  const totalLinesCleared = useSelector(getTotalLinesCleared)
+  const singleLineClears = useSelector(getLineClearsCount(1))
+  const doubleLineClears = useSelector(getLineClearsCount(2))
+  const tripleLineClears = useSelector(getLineClearsCount(3))
+  const quadLineClears = useSelector(getLineClearsCount(4))
+
   const isControllable = isPieceControllable(gameStatus)
 
   return (
@@ -54,8 +63,24 @@ export const Info: React.FC = () => {
       <InfoSection header="Statistics">
         <InfoTable>
           <Row>
-            <Header>Lines cleared</Header>
-            <Cell>{linesCleared}</Cell>
+            <Header>Total line clears</Header>
+            <Cell>{totalLinesCleared}</Cell>
+          </Row>
+          <Row>
+            <Header>1-Line clears</Header>
+            <Cell>{singleLineClears}</Cell>
+          </Row>
+          <Row>
+            <Header>2-Line clears</Header>
+            <Cell>{doubleLineClears}</Cell>
+          </Row>
+          <Row>
+            <Header>3-Line clears</Header>
+            <Cell>{tripleLineClears}</Cell>
+          </Row>
+          <Row>
+            <Header>4-Line clears</Header>
+            <Cell>{quadLineClears}</Cell>
           </Row>
         </InfoTable>
       </InfoSection>
