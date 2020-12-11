@@ -1,7 +1,9 @@
 import { useSelector } from 'react-redux'
 import { GameStatus } from '../redux/reducers/game'
 import {
+  getLevel,
   getLineClearsCount,
+  getScore,
   getStatus,
   getTotalLinesCleared,
 } from '../redux/selectors/game'
@@ -28,6 +30,8 @@ export const Info: React.FC = () => {
   const doubleLineClears = useSelector(getLineClearsCount(2))
   const tripleLineClears = useSelector(getLineClearsCount(3))
   const quadLineClears = useSelector(getLineClearsCount(4))
+  const score = useSelector(getScore)
+  const level = useSelector(getLevel)
 
   const isControllable = isPieceControllable(gameStatus)
 
@@ -52,11 +56,11 @@ export const Info: React.FC = () => {
           </Row>
           <Row>
             <Header>Level</Header>
-            <Cell>0</Cell>
+            <Cell>{level}</Cell>
           </Row>
           <Row>
             <Header>Score</Header>
-            <Cell>0</Cell>
+            <Cell>{score}</Cell>
           </Row>
         </InfoTable>
       </InfoSection>
