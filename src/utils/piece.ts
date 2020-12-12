@@ -42,10 +42,10 @@ export const createTPiece = () =>
 export const createJPiece = () =>
   createEntityData(
     {
+      [getHash(createPoint(0, 0))]: { color: 'dodgerblue' },
+      [getHash(createPoint(0, -1))]: { color: 'dodgerblue' },
       [getHash(createPoint(0, 1))]: { color: 'dodgerblue' },
-      [getHash(createPoint(1, 1))]: { color: 'dodgerblue' },
-      [getHash(createPoint(1, 0))]: { color: 'dodgerblue' },
-      [getHash(createPoint(1, -1))]: { color: 'dodgerblue' },
+      [getHash(createPoint(-1, 1))]: { color: 'dodgerblue' },
     },
     createVector(5, 1),
     0
@@ -54,12 +54,12 @@ export const createJPiece = () =>
 export const createLPiece = () =>
   createEntityData(
     {
+      [getHash(createPoint(0, 0))]: { color: 'lightsalmon' },
+      [getHash(createPoint(0, -1))]: { color: 'lightsalmon' },
       [getHash(createPoint(0, 1))]: { color: 'lightsalmon' },
-      [getHash(createPoint(-1, 1))]: { color: 'lightsalmon' },
-      [getHash(createPoint(-1, 0))]: { color: 'lightsalmon' },
-      [getHash(createPoint(-1, -1))]: { color: 'lightsalmon' },
+      [getHash(createPoint(1, 1))]: { color: 'lightsalmon' },
     },
-    createVector(5, 1),
+    createVector(4, 1),
     0
   )
 
