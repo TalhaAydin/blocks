@@ -20,8 +20,6 @@ export const descendPiece: Middleware = ({ getState, dispatch }) => (next) => (
   const hasPiece = hasEntity('piece')(state)
   const level = getLevel(state)
 
-  console.log(getDescentDelay(level))
-
   // Clear timeout
   if (
     timeoutId &&
