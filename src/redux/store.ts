@@ -17,11 +17,11 @@ export const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(
+      addPiece,
       dontRotate,
       limitMovement,
       fixRotation,
       buildPile,
-      addPiece,
       clearLines,
       gravitatePile,
       logStatusMessage,

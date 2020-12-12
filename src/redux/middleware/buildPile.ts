@@ -5,6 +5,7 @@ import {
   addBlocks,
   deleteEntity,
   EntitiesActionType,
+  setBlocks,
 } from '../actions/entities'
 import { getEntityData } from '../selectors/entities'
 import { AllActions } from '../types'
@@ -29,6 +30,7 @@ export const buildPile: Middleware = ({ dispatch, getState }) => (next) => (
   }
 
   const blocks = getPlacedEntityBlocks(entityData)
-  dispatch(deleteEntity(action.id))
+  dispatch(setBlocks('piece', {}))
   dispatch(addBlocks('pile', blocks))
+  dispatch(deleteEntity(action.id))
 }
