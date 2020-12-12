@@ -11,11 +11,13 @@ import { descendPiece } from './middleware/descendPiece'
 import { logStatusMessage } from './middleware/logMessage'
 import { addPile } from './middleware/addPile'
 import { resetGame } from './middleware/resetGame'
+import { dontRotate } from './middleware/dontRotate'
 
 export const store = createStore(
   rootReducer,
   composeWithDevTools(
     applyMiddleware(
+      dontRotate,
       limitMovement,
       fixRotation,
       buildPile,
