@@ -1,34 +1,44 @@
 import { Middleware } from 'redux'
+import { isEqual } from '../../utils/coordinate'
+import { getDescentDelay } from '../../utils/game'
 import { Movement } from '../../utils/vector'
-import { moveEntity } from '../actions/entities'
-import { GameActionType } from '../actions/game'
+import { EntitiesActionType, moveEntity } from '../actions/entities'
 import { GameStatus } from '../reducers/game'
+import { hasEntity } from '../selectors/entities'
+import { getLevel, getStatus } from '../selectors/game'
 import { AllActions } from '../types'
 
-export interface IntervalState {
-  id?: number
-}
+let timeoutId: number | null = null
 
-export const intervalState: IntervalState = {
-  id: undefined,
-}
-
-export const descendPiece: Middleware = ({ dispatch }) => (next) => (
+export const descendPiece: Middleware = ({ getState, dispatch }) => (next) => (
   action: AllActions
 ) => {
-  if (action.type !== GameActionType.SET_STATUS) {
-    return next(action)
-  }
-
   next(action)
 
-  if (action.status !== GameStatus.ACTIVE) {
-    window.clearInterval(intervalState.id)
-    return
+  const state = getState()
+  const status = getStatus(state)
+  const hasPiece = hasEntity('piece')(state)
+  const level = getLevel(state)
+
+  console.log(getDescentDelay(level))
+
+  // Clear timeout
+  if (
+    timeoutId &&
+    ((action.type === EntitiesActionType.MOVE &&
+      isEqual(action.vector, Movement.Down)) ||
+      status === GameStatus.PAUSED ||
+      !hasPiece)
+  ) {
+    window.clearTimeout(timeoutId)
+    timeoutId = null
   }
 
-  intervalState.id = window.setInterval(
-    () => dispatch(moveEntity('piece', Movement.Down)),
-    1000
-  )
+  // Set timeout
+  if (!timeoutId && status === GameStatus.ACTIVE && hasPiece) {
+    timeoutId = window.setTimeout(() => {
+      timeoutId = null
+      dispatch(moveEntity('piece', Movement.Down))
+    }, getDescentDelay(level))
+  }
 }

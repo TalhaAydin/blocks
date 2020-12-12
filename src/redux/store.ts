@@ -11,7 +11,6 @@ import { descendPiece } from './middleware/descendPiece'
 import { logStatusMessage } from './middleware/logMessage'
 import { addPile } from './middleware/addPile'
 import { resetGame } from './middleware/resetGame'
-import { resetDescent } from './middleware/resetDescent'
 
 export const store = createStore(
   rootReducer,
@@ -23,11 +22,10 @@ export const store = createStore(
       addPiece,
       clearLines,
       gravitatePile,
-      descendPiece,
       logStatusMessage,
       addPile,
       resetGame,
-      resetDescent
+      descendPiece
     )
   )
 )
