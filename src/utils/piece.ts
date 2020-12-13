@@ -6,10 +6,10 @@ import { createVector } from './vector'
 export const createIPiece = () =>
   createEntityData(
     {
-      [getHash(createPoint(-1, 0))]: { color: 'turquoise' },
-      [getHash(createPoint(0, 0))]: { color: 'turquoise' },
-      [getHash(createPoint(1, 0))]: { color: 'turquoise' },
-      [getHash(createPoint(2, 0))]: { color: 'turquoise' },
+      [getHash(createPoint(-1, 0))]: { color: 'cyan' },
+      [getHash(createPoint(0, 0))]: { color: 'cyan' },
+      [getHash(createPoint(1, 0))]: { color: 'cyan' },
+      [getHash(createPoint(2, 0))]: { color: 'cyan' },
     },
     createVector(4, 0),
     0
@@ -18,10 +18,10 @@ export const createIPiece = () =>
 export const createOPiece = () =>
   createEntityData(
     {
-      [getHash(createPoint(-1, 0))]: { color: 'gold' },
-      [getHash(createPoint(0, 0))]: { color: 'gold' },
-      [getHash(createPoint(-1, 1))]: { color: 'gold' },
-      [getHash(createPoint(0, 1))]: { color: 'gold' },
+      [getHash(createPoint(-1, 0))]: { color: 'yellow' },
+      [getHash(createPoint(0, 0))]: { color: 'yellow' },
+      [getHash(createPoint(-1, 1))]: { color: 'yellow' },
+      [getHash(createPoint(0, 1))]: { color: 'yellow' },
     },
     createVector(5, 0),
     0
@@ -30,10 +30,10 @@ export const createOPiece = () =>
 export const createTPiece = () =>
   createEntityData(
     {
-      [getHash(createPoint(0, 0))]: { color: 'mediumpurple' },
-      [getHash(createPoint(-1, 0))]: { color: 'mediumpurple' },
-      [getHash(createPoint(1, 0))]: { color: 'mediumpurple' },
-      [getHash(createPoint(0, 1))]: { color: 'mediumpurple' },
+      [getHash(createPoint(0, 0))]: { color: 'purple' },
+      [getHash(createPoint(-1, 0))]: { color: 'purple' },
+      [getHash(createPoint(1, 0))]: { color: 'purple' },
+      [getHash(createPoint(0, 1))]: { color: 'purple' },
     },
     createVector(5, 0),
     0
@@ -42,10 +42,10 @@ export const createTPiece = () =>
 export const createJPiece = () =>
   createEntityData(
     {
-      [getHash(createPoint(0, 0))]: { color: 'dodgerblue' },
-      [getHash(createPoint(0, -1))]: { color: 'dodgerblue' },
-      [getHash(createPoint(0, 1))]: { color: 'dodgerblue' },
-      [getHash(createPoint(-1, 1))]: { color: 'dodgerblue' },
+      [getHash(createPoint(0, 0))]: { color: 'blue' },
+      [getHash(createPoint(0, -1))]: { color: 'blue' },
+      [getHash(createPoint(0, 1))]: { color: 'blue' },
+      [getHash(createPoint(-1, 1))]: { color: 'blue' },
     },
     createVector(5, 1),
     0
@@ -54,10 +54,10 @@ export const createJPiece = () =>
 export const createLPiece = () =>
   createEntityData(
     {
-      [getHash(createPoint(0, 0))]: { color: 'lightsalmon' },
-      [getHash(createPoint(0, -1))]: { color: 'lightsalmon' },
-      [getHash(createPoint(0, 1))]: { color: 'lightsalmon' },
-      [getHash(createPoint(1, 1))]: { color: 'lightsalmon' },
+      [getHash(createPoint(0, 0))]: { color: 'orange' },
+      [getHash(createPoint(0, -1))]: { color: 'orange' },
+      [getHash(createPoint(0, 1))]: { color: 'orange' },
+      [getHash(createPoint(1, 1))]: { color: 'orange' },
     },
     createVector(4, 1),
     0
@@ -66,10 +66,10 @@ export const createLPiece = () =>
 export const createSPiece = () =>
   createEntityData(
     {
-      [getHash(createPoint(0, 0))]: { color: 'yellowgreen' },
-      [getHash(createPoint(1, 0))]: { color: 'yellowgreen' },
-      [getHash(createPoint(0, 1))]: { color: 'yellowgreen' },
-      [getHash(createPoint(-1, 1))]: { color: 'yellowgreen' },
+      [getHash(createPoint(0, 0))]: { color: 'green' },
+      [getHash(createPoint(1, 0))]: { color: 'green' },
+      [getHash(createPoint(0, 1))]: { color: 'green' },
+      [getHash(createPoint(-1, 1))]: { color: 'green' },
     },
     createVector(5, 0),
     0
@@ -78,10 +78,10 @@ export const createSPiece = () =>
 export const createZPiece = () =>
   createEntityData(
     {
-      [getHash(createPoint(0, 0))]: { color: 'crimson' },
-      [getHash(createPoint(-1, 0))]: { color: 'crimson' },
-      [getHash(createPoint(0, 1))]: { color: 'crimson' },
-      [getHash(createPoint(1, 1))]: { color: 'crimson' },
+      [getHash(createPoint(0, 0))]: { color: 'red' },
+      [getHash(createPoint(-1, 0))]: { color: 'red' },
+      [getHash(createPoint(0, 1))]: { color: 'red' },
+      [getHash(createPoint(1, 1))]: { color: 'red' },
     },
     createVector(5, 0),
     0
