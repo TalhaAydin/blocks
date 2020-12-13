@@ -6,8 +6,13 @@ import {
 } from '../../utils/entities'
 import { getOutOfBounds, getOverlaps } from '../../utils/point'
 import { createSize } from '../../utils/size'
-import { createVector, isZeroVector } from '../../utils/vector'
-import { EntitiesActionType, moveEntity } from '../actions/entities'
+import { addVector, createVector, isZeroVector } from '../../utils/vector'
+import {
+  addEntity,
+  deleteEntity,
+  EntitiesActionType,
+} from '../actions/entities'
+import { EntityData } from '../reducers/entities'
 import { getEntities } from '../selectors/entities'
 import { AllActions } from '../types'
 
@@ -24,10 +29,11 @@ export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
     return next(action)
   }
 
-  const placedEntityBlocks = getPlacedEntityBlocks({
+  const rotatedEntityData: EntityData = {
     ...entityData,
     rotation: getNextEntityRotation(entityData.rotation, action.direction),
-  })
+  }
+  const placedEntityBlocks = getPlacedEntityBlocks(rotatedEntityData)
 
   const restPoints = getPoints(
     getPlacedEntityBlocks(Object.values(restEntityData))
@@ -43,16 +49,24 @@ export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
   ]
 
   simulationVectors.some((v) => {
-    const nextPoints = getPoints(moveBlocks(placedEntityBlocks, v))
+    const blocks = moveBlocks(placedEntityBlocks, v)
+    const points = getPoints(blocks)
 
     if (
-      getOutOfBounds(createSize(10, 20))(nextPoints).length === 0 &&
-      getOverlaps(restPoints)(nextPoints).length === 0
+      getOutOfBounds(createSize(10, 20))(points).length === 0 &&
+      getOverlaps(restPoints)(points).length === 0
     ) {
-      if (!isZeroVector(v)) {
-        dispatch(moveEntity(action.id, v))
+      if (isZeroVector(v)) {
+        next(action)
+      } else {
+        dispatch(deleteEntity(action.id))
+        dispatch(
+          addEntity(action.id, {
+            ...rotatedEntityData,
+            position: addVector(rotatedEntityData.position, v),
+          })
+        )
       }
-      next(action)
       return true
     }
 
