@@ -1,5 +1,9 @@
 import { Reducer } from 'redux'
-import { EntitiesActions, EntitiesActionType } from '../actions/entities'
+import {
+  EntitiesActions,
+  EntitiesActionType,
+  isEntitiesActionWithTarget,
+} from '../actions/entities'
 import { getNextEntityRotation } from '../../utils/entities'
 import { addVector, Vector } from '../../utils/vector'
 import { Blocks, filterBlocks } from '../../utils/blocks'
@@ -24,11 +28,7 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
   state = initialState,
   action
 ) => {
-  if (
-    action.type !== EntitiesActionType.ADD &&
-    action.type !== EntitiesActionType.RESET &&
-    !state[action.id]
-  ) {
+  if (isEntitiesActionWithTarget(action) && !state[action.id]) {
     console.warn(`Entity with id '${action.id}' does not exist`)
     return state
   }

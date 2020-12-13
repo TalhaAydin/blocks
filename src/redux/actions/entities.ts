@@ -1,4 +1,4 @@
-import { Action } from 'redux'
+import { Action, AnyAction } from 'redux'
 import { Blocks } from '../../utils/blocks'
 import { Point } from '../../utils/point'
 import { Vector } from '../../utils/vector'
@@ -68,6 +68,20 @@ export type EntitiesActions =
   | SetBlocksAction
   | DeleteEntityAction
   | ResetEntityAction
+
+export type EntitiesActionsWithTarget = Exclude<
+  EntitiesActions,
+  AddEntityAction | ResetEntityAction
+>
+
+export const isEntitiesActionWithTarget = (
+  action: AnyAction
+): action is EntitiesActionsWithTarget =>
+  Object.values(EntitiesActionType)
+    .filter(
+      (v) => ![EntitiesActionType.ADD, EntitiesActionType.RESET].includes(v)
+    )
+    .some((v) => v === action.type)
 
 // implementations
 

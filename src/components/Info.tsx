@@ -44,6 +44,7 @@ export const Info: React.FC = () => {
           href="https://github.com/TalhaAydin/blocks"
           style={{ color: 'white' }}
           target="_blank"
+          rel="noreferrer"
         >
           github.com/TalhaAydin/blocks
         </a>
