@@ -19,9 +19,9 @@ export const store = createStore(
     applyMiddleware(
       addPiece,
       dontRotate,
+      buildPile,
       limitMovement,
       fixRotation,
-      buildPile,
       clearLines,
       gravitatePile,
       logStatusMessage,

@@ -19,7 +19,6 @@ export enum EntitiesActionType {
   DELETE_BLOCKS = 'ENTITIES_DELETE_BLOCKS',
   SET_BLOCKS = 'ENTITIES_SET_BLOCKS',
   DELETE = 'ENTITIES_DELETE',
-  MOVEMENT_LIMITED = 'ENTITIES_MOVEMENT_LIMITED',
   RESET = 'ENTITIES_RESET',
 }
 
@@ -60,13 +59,6 @@ export interface DeleteEntityAction extends Action<EntitiesActionType.DELETE> {
 
 export interface ResetEntityAction extends Action<EntitiesActionType.RESET> {}
 
-export interface EntityMovementLimitedAction
-  extends Action<EntitiesActionType.MOVEMENT_LIMITED> {
-  id: EntityID
-  vector: Vector
-  original: Vector
-}
-
 export type EntitiesActions =
   | AddEntityAction
   | MoveEntityAction
@@ -75,7 +67,6 @@ export type EntitiesActions =
   | DeleteBlocksAction
   | SetBlocksAction
   | DeleteEntityAction
-  | EntityMovementLimitedAction
   | ResetEntityAction
 
 // implementations
@@ -129,15 +120,4 @@ export const deleteEntity = (id: EntityID): DeleteEntityAction => ({
 
 export const resetEntities = (): ResetEntityAction => ({
   type: EntitiesActionType.RESET,
-})
-
-export const movementLimited = (
-  id: EntityID,
-  vector: Vector,
-  original: Vector
-) => ({
-  type: EntitiesActionType.MOVEMENT_LIMITED,
-  id,
-  vector,
-  original,
 })

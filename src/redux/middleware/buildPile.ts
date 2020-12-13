@@ -1,6 +1,7 @@
 import { Middleware } from 'redux'
+import { isEqual } from '../../utils/coordinate'
 import { getPlacedEntityBlocks } from '../../utils/entities'
-import { isDownVector } from '../../utils/vector'
+import { addVector, isDownVector } from '../../utils/vector'
 import {
   addBlocks,
   deleteEntity,
@@ -13,23 +14,32 @@ import { AllActions } from '../types'
 export const buildPile: Middleware = ({ dispatch, getState }) => (next) => (
   action: AllActions
 ) => {
-  if (action.type !== EntitiesActionType.MOVEMENT_LIMITED) {
+  if (action.type !== EntitiesActionType.MOVE || !isDownVector(action.vector)) {
     return next(action)
   }
 
-  if (!isDownVector(action.original)) {
-    return next(action)
+  const entityBefore = getEntityData(action.id)(getState())
+  if (!entityBefore) {
+    return
   }
 
   next(action)
 
-  const entityData = getEntityData(action.id)(getState())
-
-  if (!entityData) {
+  const entityAfter = getEntityData(action.id)(getState())
+  if (!entityAfter) {
     return
   }
 
-  const blocks = getPlacedEntityBlocks(entityData)
+  if (
+    isEqual(
+      entityAfter.position,
+      addVector(entityBefore.position, action.vector)
+    )
+  ) {
+    return
+  }
+
+  const blocks = getPlacedEntityBlocks(entityAfter)
   dispatch(setBlocks(action.id, {}))
   dispatch(addBlocks('pile', blocks))
   dispatch(deleteEntity(action.id))
