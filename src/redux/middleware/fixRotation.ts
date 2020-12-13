@@ -46,6 +46,8 @@ export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
     createVector(-2, 0),
     createVector(1, 0),
     createVector(2, 0),
+    createVector(0, 1),
+    createVector(0, 2),
   ]
 
   simulationVectors.some((v) => {
