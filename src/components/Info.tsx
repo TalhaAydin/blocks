@@ -49,90 +49,125 @@ export const Info: React.FC = () => {
           github.com/TalhaAydin/blocks
         </a>
       </p>
-      <InfoSection header="Game">
-        <InfoTable>
-          <Row>
-            <Header>Status</Header>
-            <Cell>{gameStatus}</Cell>
-          </Row>
-          <Row>
-            <Header>Level</Header>
-            <Cell>{level}</Cell>
-          </Row>
-          <Row>
-            <Header>Score</Header>
-            <Cell>{score}</Cell>
-          </Row>
-        </InfoTable>
-      </InfoSection>
-      <InfoSection header="Statistics">
-        <InfoTable>
-          <Row>
-            <Header>1-Line clears</Header>
-            <Cell>{singleLineClears} x 1</Cell>
-          </Row>
-          <Row>
-            <Header>2-Line clears</Header>
-            <Cell>{doubleLineClears} x 2</Cell>
-          </Row>
-          <Row>
-            <Header>3-Line clears</Header>
-            <Cell>{tripleLineClears} x 3</Cell>
-          </Row>
-          <Row>
-            <Header>4-Line clears</Header>
-            <Cell>{quadLineClears} x 4</Cell>
-          </Row>
-          <Row>
-            <Header>Total lines cleared</Header>
-            <Cell>{totalLinesCleared}</Cell>
-          </Row>
-        </InfoTable>
-      </InfoSection>
-      <InfoSection header="Game controls">
-        <InfoGlossary>
-          <Entry
-            term="⌨ F1"
-            details="Create a new game"
-            enabled={isGameCreatable(gameStatus)}
-          />
-          <Entry
-            term="⌨ Enter"
-            details="Start game"
-            enabled={isGameStartable(gameStatus)}
-          />
-          <Entry
-            term="⌨ P"
-            details={`${
-              gameStatus === GameStatus.PAUSED ? 'Unpause' : 'Pause'
-            } game`}
-            enabled={isGamePausable(gameStatus)}
-          />
-          <Entry
-            term="⌨ Escape"
-            details="End game"
-            enabled={isGameEndable(gameStatus)}
-          />
-        </InfoGlossary>
-      </InfoSection>
-      <InfoSection header="Block controls">
-        <InfoGlossary>
-          <Entry term="⌨ Left" details="Move left" enabled={isControllable} />
-          <Entry term="⌨ Right" details="Move right" enabled={isControllable} />
-          <Entry term="⌨ Down" details="Move down" enabled={isControllable} />
-          <Entry term="⌨ Up" details="Rotate right" enabled={isControllable} />
-          <Entry
-            term="⌨ Ctrl + Up"
-            details="Rotate left"
-            enabled={isControllable}
-          />
-          <Entry
-            term="⌨ Space"
-            details="Drop to bottom"
-            enabled={isControllable}
-          />
-        </InfoGlossary>
-      </InfoSection>
+      <div
+        style={{
+          display: 'flex',
+        }}
+      >
+        <div
+          style={{
+            flex: '0 0 auto',
+          }}
+        >
+          <InfoSection header="Game">
+            <InfoTable>
+              <Row>
+                <Header>Status</Header>
+                <Cell>{gameStatus}</Cell>
+              </Row>
+              <Row>
+                <Header>Level</Header>
+                <Cell>{level}</Cell>
+              </Row>
+              <Row>
+                <Header>Score</Header>
+                <Cell>{score}</Cell>
+              </Row>
+            </InfoTable>
+          </InfoSection>
+          <InfoSection header="Statistics">
+            <InfoTable>
+              <Row>
+                <Header>1-Line clears</Header>
+                <Cell>{singleLineClears} x 1</Cell>
+              </Row>
+              <Row>
+                <Header>2-Line clears</Header>
+                <Cell>{doubleLineClears} x 2</Cell>
+              </Row>
+              <Row>
+                <Header>3-Line clears</Header>
+                <Cell>{tripleLineClears} x 3</Cell>
+              </Row>
+              <Row>
+                <Header>4-Line clears</Header>
+                <Cell>{quadLineClears} x 4</Cell>
+              </Row>
+              <Row>
+                <Header>Total lines cleared</Header>
+                <Cell>{totalLinesCleared}</Cell>
+              </Row>
+            </InfoTable>
+          </InfoSection>
+        </div>
+        <div
+          style={{
+            flex: '0 0 auto',
+            marginLeft: '32px',
+          }}
+        >
+          <InfoSection header="Game controls">
+            <InfoGlossary>
+              <Entry
+                term="⌨ F1"
+                details="Create a new game"
+                enabled={isGameCreatable(gameStatus)}
+              />
+              <Entry
+                term="⌨ Enter"
+                details="Start game"
+                enabled={isGameStartable(gameStatus)}
+              />
+              <Entry
+                term="⌨ P"
+                details={`${
+                  gameStatus === GameStatus.PAUSED ? 'Unpause' : 'Pause'
+                } game`}
+                enabled={isGamePausable(gameStatus)}
+              />
+              <Entry
+                term="⌨ Escape"
+                details="End game"
+                enabled={isGameEndable(gameStatus)}
+              />
+            </InfoGlossary>
+          </InfoSection>
+          <InfoSection header="Block controls">
+            <InfoGlossary>
+              <Entry
+                term="⌨ Left"
+                details="Move left"
+                enabled={isControllable}
+              />
+              <Entry
+                term="⌨ Right"
+                details="Move right"
+                enabled={isControllable}
+              />
+              <Entry
+                term="⌨ Down"
+                details="Move down"
+                enabled={isControllable}
+              />
+              <Entry
+                term="⌨ Up"
+                details="Rotate right"
+                enabled={isControllable}
+              />
+              <Entry
+                term="⌨ Ctrl + Up"
+                details="Rotate left"
+                enabled={isControllable}
+              />
+              <Entry
+                term="⌨ Space"
+                details="Drop to bottom"
+                enabled={isControllable}
+              />
+            </InfoGlossary>
+          </InfoSection>
+        </div>
+      </div>
     </InfoScreen>
   )
 }
