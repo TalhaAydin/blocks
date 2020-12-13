@@ -1,4 +1,9 @@
-import { createPoint, isWithinBounds } from './point'
+import {
+  createPoint,
+  getOutOfBounds,
+  getOverlaps,
+  isWithinBounds,
+} from './point'
 import { createSize } from './size'
 
 describe('isWithinBounds()', () => {
@@ -25,5 +30,62 @@ describe('isWithinBounds()', () => {
       const func = isWithinBounds(createSize(10, 10))
       expect(func([createPoint(9, 9), createPoint(0, -1)])).toBe(false)
     })
+  })
+})
+
+describe('getOverlaps()', () => {
+  it('returns the overlapping points', () => {
+    expect(
+      getOverlaps([createPoint(0, 0)])([createPoint(0, 0)])
+    ).toIncludeSameMembers([createPoint(0, 0)])
+
+    expect(
+      getOverlaps([
+        createPoint(7, 13),
+        createPoint(8, 13),
+        createPoint(9, 13),
+      ])([createPoint(8, 13), createPoint(8, 14), createPoint(8, 15)])
+    ).toIncludeSameMembers([createPoint(8, 13)])
+  })
+  it('returns empty on no overlaps', () => {
+    expect(
+      getOverlaps([
+        createPoint(7, 13),
+        createPoint(8, 13),
+        createPoint(9, 13),
+      ])([createPoint(11, 13), createPoint(11, 14), createPoint(11, 15)])
+    ).toHaveLength(0)
+  })
+})
+
+describe('getOutOfBounds()', () => {
+  it('returns all out of bounds points', () => {
+    expect(
+      getOutOfBounds(createSize(5, 5))([createPoint(5, 5), createPoint(4, 4)])
+    ).toIncludeSameMembers([createPoint(5, 5)])
+
+    expect(
+      getOutOfBounds(createSize(5, 5))([
+        createPoint(5, 4),
+        createPoint(4, 5),
+        createPoint(5, 5),
+        createPoint(4, 4),
+      ])
+    ).toIncludeSameMembers([
+      createPoint(5, 5),
+      createPoint(5, 4),
+      createPoint(4, 5),
+    ])
+  })
+  it('returns empty if all points are within bounds', () => {
+    expect(
+      getOutOfBounds(createSize(5, 5))([
+        createPoint(4, 4),
+        createPoint(3, 3),
+        createPoint(2, 2),
+        createPoint(1, 1),
+        createPoint(0, 0),
+      ])
+    ).toHaveLength(0)
   })
 })

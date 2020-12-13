@@ -30,7 +30,7 @@ export const buildPile: Middleware = ({ dispatch, getState }) => (next) => (
   }
 
   const blocks = getPlacedEntityBlocks(entityData)
-  dispatch(setBlocks('piece', {}))
+  dispatch(setBlocks(action.id, {}))
   dispatch(addBlocks('pile', blocks))
   dispatch(deleteEntity(action.id))
 }
