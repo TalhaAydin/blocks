@@ -20,18 +20,11 @@ export const getVector = (hash: string): Vector => {
     throw new TypeError('Not a hash of Vector')
   }
   const split = hash.split(':', 3)
-  return {
-    type: 'vector',
-    x: parseInt(split[1], 10),
-    y: parseInt(split[2], 10),
-  }
+  return createVector(parseInt(split[1], 10), parseInt(split[2], 10))
 }
 
-export const addVector = (vectorA: Vector, vectorB: Vector): Vector => ({
-  type: 'vector',
-  x: vectorA.x + vectorB.x,
-  y: vectorA.y + vectorB.y,
-})
+export const addVector = (vectorA: Vector, vectorB: Vector): Vector =>
+  createVector(vectorA.x + vectorB.x, vectorA.y + vectorB.y)
 
 export const Movement: Record<string, Vector> = {
   Left: createVector(-1, 0),
