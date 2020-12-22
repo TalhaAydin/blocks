@@ -22,6 +22,7 @@ import {
   isGamePausable,
   isGameStartable,
 } from '../utils/controls'
+import { version } from '../../package.json'
 
 export const Info: React.FC = () => {
   const gameStatus = useSelector(getStatus)
@@ -38,17 +39,25 @@ export const Info: React.FC = () => {
   return (
     <InfoScreen>
       <h1>Blocks</h1>
-      <p>
-        Source:{' '}
-        <a
-          href="https://github.com/TalhaAydin/blocks"
-          style={{ color: 'white' }}
-          target="_blank"
-          rel="noreferrer"
-        >
-          github.com/TalhaAydin/blocks
-        </a>
-      </p>
+      <InfoTable>
+        <Row>
+          <Header>Version</Header>
+          <Cell>{version}</Cell>
+        </Row>
+        <Row>
+          <Header>Source</Header>
+          <Cell>
+            <a
+              href="https://github.com/TalhaAydin/blocks"
+              style={{ color: 'white' }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              github.com/TalhaAydin/blocks
+            </a>
+          </Cell>
+        </Row>
+      </InfoTable>
       <div
         style={{
           display: 'flex',
