@@ -22,7 +22,7 @@ export const getPoint = (hash: string): Point => {
     throw new TypeError('Not a hash of Point')
   }
   const split = hash.split(':', 3)
-  return { type: 'point', x: parseInt(split[1], 10), y: parseInt(split[2], 10) }
+  return createPoint(parseInt(split[1], 10), parseInt(split[2], 10))
 }
 
 export const movePoint = (point: Point, vector: Vector): Point =>
