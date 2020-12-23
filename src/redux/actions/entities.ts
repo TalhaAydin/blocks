@@ -15,6 +15,7 @@ export enum EntitiesActionType {
   ADD = 'ENTITIES_ADD',
   MOVE = 'ENTITIES_MOVE',
   ROTATE = 'ENTITIES_ROTATE',
+  TRANSFORM = 'ENTITIES_TRANSFORM',
   ADD_BLOCKS = 'ENTITIES_ADD_BLOCKS',
   DELETE_BLOCKS = 'ENTITIES_DELETE_BLOCKS',
   SET_BLOCKS = 'ENTITIES_SET_BLOCKS',
@@ -25,6 +26,13 @@ export enum EntitiesActionType {
 export interface AddEntityAction extends Action<EntitiesActionType.ADD> {
   id: EntityID
   data: EntityData
+}
+
+export interface TransformEntityAction
+  extends Action<EntitiesActionType.TRANSFORM> {
+  id: EntityID
+  position: Vector
+  rotation: number
 }
 
 export interface MoveEntityAction extends Action<EntitiesActionType.MOVE> {
@@ -68,6 +76,7 @@ export type EntitiesActions =
   | SetBlocksAction
   | DeleteEntityAction
   | ResetEntityAction
+  | TransformEntityAction
 
 export type EntitiesActionsWithTarget = Exclude<
   EntitiesActions,
@@ -89,6 +98,17 @@ export const addEntity = (id: EntityID, data: EntityData): AddEntityAction => ({
   type: EntitiesActionType.ADD,
   id,
   data,
+})
+
+export const transformEntity = (
+  id: EntityID,
+  position: Vector,
+  rotation: number
+): TransformEntityAction => ({
+  type: EntitiesActionType.TRANSFORM,
+  id,
+  position,
+  rotation,
 })
 
 export const moveEntity = (id: EntityID, vector: Vector): MoveEntityAction => ({

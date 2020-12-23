@@ -7,11 +7,7 @@ import {
 import { getOutOfBounds, getOverlaps } from '../../utils/point'
 import { createSize } from '../../utils/size'
 import { addVector, createVector, isZeroVector } from '../../utils/vector'
-import {
-  addEntity,
-  deleteEntity,
-  EntitiesActionType,
-} from '../actions/entities'
+import { EntitiesActionType, transformEntity } from '../actions/entities'
 import { EntityData } from '../reducers/entities'
 import { getEntities } from '../selectors/entities'
 import { AllActions } from '../types'
@@ -61,12 +57,12 @@ export const fixRotation: Middleware = ({ dispatch, getState }) => (next) => (
       if (isZeroVector(v)) {
         next(action)
       } else {
-        dispatch(deleteEntity(action.id))
         dispatch(
-          addEntity(action.id, {
-            ...rotatedEntityData,
-            position: addVector(rotatedEntityData.position, v),
-          })
+          transformEntity(
+            action.id,
+            addVector(rotatedEntityData.position, v),
+            rotatedEntityData.rotation
+          )
         )
       }
       return true

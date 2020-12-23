@@ -1,7 +1,16 @@
+import { isEqual } from 'lodash'
 import { EntityRotationDirection } from '../redux/actions/entities'
 import { EntityData } from '../redux/reducers/entities'
-import { Blocks, moveBlocks, rotateBlocks } from './blocks'
-import { Vector } from './vector'
+import {
+  Blocks,
+  getBlockPath,
+  getPoints,
+  moveBlocks,
+  rotateBlocks,
+} from './blocks'
+import { getOutOfBounds, getOverlaps } from './point'
+import { Size } from './size'
+import { addVector, createVector, Vector } from './vector'
 
 export const getNextEntityRotation = (
   currentRotation: number,
@@ -19,10 +28,52 @@ export const getPlacedEntityBlocks = (data: EntityData | EntityData[]) =>
 
 export const createEntityData = (
   shape: Blocks,
-  position: Vector,
-  rotation: number
+  position: Vector = createVector(0, 0),
+  rotation: number = 0
 ) => ({
   shape,
   position,
   rotation,
 })
+
+export const isTransformed = (a: EntityData, b: EntityData): boolean => {
+  const aPoints = getPoints(a.shape)
+  const bPoints = getPoints(b.shape)
+
+  return (
+    aPoints.length === bPoints.length &&
+    getOverlaps(aPoints)(bPoints).length === aPoints.length &&
+    (a.rotation !== b.rotation || !isEqual(a.position, b.position))
+  )
+}
+
+export const getEntityMovementLimitedVector = (
+  entity: EntityData,
+  vector: Vector,
+  size: Size,
+  world: EntityData[]
+): Vector => {
+  const worldEntityPoints = getPoints(getPlacedEntityBlocks(world))
+
+  const blockPath = getBlockPath(vector)
+
+  const blockPathEndIndex = blockPath.findIndex((_, i, a) => {
+    const points = getPoints(
+      getPlacedEntityBlocks({
+        ...entity,
+        position: addVector(
+          entity.position,
+          a.slice(0, i + 1).reduce(addVector, createVector(0, 0))
+        ),
+      })
+    )
+    return (
+      getOutOfBounds(size)(points).length > 0 ||
+      getOverlaps(worldEntityPoints)(points).length > 0
+    )
+  })
+
+  return blockPath
+    .slice(0, blockPathEndIndex === -1 ? undefined : blockPathEndIndex)
+    .reduce(addVector, createVector(0, 0))
+}

@@ -8,10 +8,11 @@ import { addPiece } from './middleware/addPiece'
 import { clearLines } from './middleware/clearLines'
 import { gravitatePile } from './middleware/gravitatePile'
 import { descendPiece } from './middleware/descendPiece'
-import { logStatusMessage } from './middleware/logMessage'
 import { addPile } from './middleware/addPile'
 import { resetGame } from './middleware/resetGame'
 import { dontRotate } from './middleware/dontRotate'
+import { addGhost } from './middleware/addGhost'
+import { transformGhost } from './middleware/transformGhost'
 
 export const store = createStore(
   rootReducer,
@@ -24,10 +25,11 @@ export const store = createStore(
       fixRotation,
       clearLines,
       gravitatePile,
-      logStatusMessage,
       addPile,
       resetGame,
-      descendPiece
+      descendPiece,
+      addGhost,
+      transformGhost
     )
   )
 )

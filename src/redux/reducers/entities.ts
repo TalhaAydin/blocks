@@ -29,8 +29,15 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
   action
 ) => {
   if (isEntitiesActionWithTarget(action) && !state[action.id]) {
-    console.warn(`Entity with id '${action.id}' does not exist`)
-    return state
+    throw new Error(
+      `${action.type}: Entity with id '${action.id}' does not exist`
+    )
+  }
+
+  if (action.type === EntitiesActionType.ADD && state[action.id]) {
+    throw new Error(
+      `${action.type}: Entity with id '${action.id}' already exists`
+    )
   }
 
   switch (action.type) {
@@ -38,6 +45,15 @@ export const entitiesReducer: Reducer<EntitiesState, EntitiesActions> = (
       return {
         ...state,
         [action.id]: action.data,
+      }
+    case EntitiesActionType.TRANSFORM:
+      return {
+        ...state,
+        [action.id]: {
+          ...state[action.id],
+          position: action.position,
+          rotation: action.rotation,
+        },
       }
     case EntitiesActionType.MOVE:
       return {
