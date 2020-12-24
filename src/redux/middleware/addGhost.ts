@@ -8,29 +8,28 @@ import { AllActions } from '../types'
 export const addGhost: Middleware = ({ dispatch, getState }) => (next) => (
   action: AllActions
 ) => {
-  const beforeState = getState()
-  const beforePiece = getEntityData('piece')(beforeState)
-  // const beforeGhost = getEntityData('ghost')(beforeState)
+  const stateBefore = getState()
+  const pieceBefore = getEntityData('piece')(stateBefore)
 
   next(action)
 
-  const afterState = getState()
-  const afterPiece = getEntityData('piece')(afterState)
-  const afterGhost = getEntityData('ghost')(afterState)
+  const stateAfter = getState()
+  const pieceAfter = getEntityData('piece')(stateAfter)
+  const ghostAfter = getEntityData('ghost')(stateAfter)
 
-  if (!beforePiece && afterPiece && !afterGhost) {
+  if (!pieceBefore && pieceAfter && !ghostAfter) {
     dispatch(
       addEntity(
         'ghost',
         createEntityData(
-          mapBlocks(afterPiece.shape, (p, c) => [
+          mapBlocks(pieceAfter.shape, (p, c) => [
             p,
-            { ...c, color: 'transparent' },
+            { ...c, color: 'transparent', z: -1 },
           ])
         )
       )
     )
-  } else if (beforePiece && !afterPiece && afterGhost) {
+  } else if (pieceBefore && !pieceAfter && ghostAfter) {
     dispatch(deleteEntity('ghost'))
   }
 }

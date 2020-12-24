@@ -1,8 +1,10 @@
 import { Middleware } from 'redux'
 import {
   getEntityMovementLimitedVector,
+  getPlacedEntityBlocks,
   isTransformed,
 } from '../../utils/entities'
+import { getOverlaps } from '../../utils/point'
 import { createSize } from '../../utils/size'
 import { addVector, createVector } from '../../utils/vector'
 import { transformEntity } from '../actions/entities'
@@ -43,21 +45,6 @@ export const transformGhost: Middleware = ({ dispatch, getState }) => (
       .map(([_, e]) => e)
   )
 
-  // const newGhost = createEntityData(
-  //   piece.shape,
-  //   addVector(piece.position, vector),
-  //   piece.rotation
-  // )
-
-  // const newGhostPoints = getPoints(getPlacedEntityBlocks(newGhost))
-  // const worldPoints = getPoints(
-  //   getPlacedEntityBlocks([piece, ...Object.values(rest)])
-  // )
-
-  // if (
-  //   getOutOfBounds(createSize(10, 20))(newGhostPoints).length === 0 &&
-  //   getOverlaps(worldPoints)(newGhostPoints).length === 0
-  // ) {
   dispatch(
     transformEntity(
       'ghost',
@@ -65,5 +52,4 @@ export const transformGhost: Middleware = ({ dispatch, getState }) => (
       pieceAfter.rotation
     )
   )
-  // }
 }

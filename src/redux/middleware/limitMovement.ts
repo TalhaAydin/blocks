@@ -13,7 +13,9 @@ export const limitMovement: Middleware = ({ dispatch, getState }) => (next) => (
     return next(action)
   }
 
-  const { [action.id]: entityData, ...restEntityData } = getEntities(getState())
+  const { [action.id]: entityData, ghost: _, ...restEntityData } = getEntities(
+    getState()
+  )
 
   if (!entityData) {
     return next(action)

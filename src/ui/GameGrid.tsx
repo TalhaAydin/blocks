@@ -12,6 +12,7 @@ export const GameGrid: React.FC<GameGridProps> = ({
     <div
       data-testid="game.field"
       style={{
+        position: 'relative',
         height: '100%',
         display: 'grid',
         gridTemplateColumns: `repeat(${width}, 1fr)`,

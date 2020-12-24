@@ -6,6 +6,7 @@ import { createVector, Vector } from './vector'
 
 export type BlockConfig = {
   color: StandardLonghandProperties['backgroundColor']
+  z?: StandardLonghandProperties['zIndex']
 }
 
 export type Blocks = Record<PointHash, BlockConfig>
