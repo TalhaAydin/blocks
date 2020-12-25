@@ -5,6 +5,7 @@ import {
   Blocks,
   getBlockPath,
   getPoints,
+  isEqualShape,
   moveBlocks,
   rotateBlocks,
 } from './blocks'
@@ -36,16 +37,9 @@ export const createEntityData = (
   rotation,
 })
 
-export const isTransformed = (a: EntityData, b: EntityData): boolean => {
-  const aPoints = getPoints(a.shape)
-  const bPoints = getPoints(b.shape)
-
-  return (
-    aPoints.length === bPoints.length &&
-    getOverlaps(aPoints)(bPoints).length === aPoints.length &&
-    (a.rotation !== b.rotation || !isEqual(a.position, b.position))
-  )
-}
+export const isTransformed = (a: EntityData, b: EntityData): boolean =>
+  isEqualShape(a.shape, b.shape) &&
+  (a.rotation !== b.rotation || !isEqual(a.position, b.position))
 
 export const getEntityMovementLimitedVector = (
   entity: EntityData,

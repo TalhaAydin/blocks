@@ -1,7 +1,14 @@
 import { StandardLonghandProperties } from 'csstype'
 import { getRadians, rotatePoint } from './angle'
 import { getHash } from './coordinate'
-import { createPoint, getPoint, movePoint, Point, PointHash } from './point'
+import {
+  createPoint,
+  getOverlaps,
+  getPoint,
+  movePoint,
+  Point,
+  PointHash,
+} from './point'
 import { createVector, Vector } from './vector'
 
 export type BlockConfig = {
@@ -73,3 +80,13 @@ export const groupByRow = (blocks: Blocks): Record<number, Blocks> =>
     },
     {}
   )
+
+export const isEqualShape = (a: Blocks, b: Blocks) => {
+  const aPoints = getPoints(a)
+  const bPoints = getPoints(b)
+
+  return (
+    aPoints.length === bPoints.length &&
+    getOverlaps(aPoints)(bPoints).length === aPoints.length
+  )
+}
