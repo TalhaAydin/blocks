@@ -19,3 +19,5 @@ export const getAllPlacedBlocks = createSelector(
 
 export const hasEntity = (id: EntityID) =>
   createSelector(getEntities, (entities): boolean => !!entities[id])
+
+export const hasPiece = hasEntity('piece')

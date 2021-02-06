@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { getLevel as getLevelUtil } from '../../utils/game'
 import { GameState } from '../reducers/game'
 import { RootState } from '../reducers/root'
+import { isGameInProgress as isGameInProgressUtil } from '../../utils/game'
 
 export const getGame = (state: RootState): GameState => state.game
 
@@ -29,3 +30,5 @@ export const getScore = createSelector(getLineClears, (lineClears) =>
     0
   )
 )
+
+export const isGameInProgress = createSelector(getStatus, isGameInProgressUtil)

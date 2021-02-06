@@ -1,20 +1,26 @@
 import { Middleware } from 'redux'
 import { AllActions } from '../types'
 import { Subject } from 'rxjs'
+import { Selector } from 'reselect'
 
-export type GetEmitData<D extends {}, S extends {}> = (
-  prevState: S,
-  nextState: S
-) => undefined | D
+export type GetEmitData<S extends {}, D extends {}> = (
+  selectedStateAfter: S,
+  selectedStateBefore: S
+) => D
 
-export const emit = <T extends {}>(subject: Subject<T>) => <S extends {}>(
-  getEmitData: GetEmitData<T, S>
-): Middleware => ({ getState }) => (next) => (action: AllActions) => {
-  const prevState = getState()
+export const emit = <E extends {}>(subject: Subject<E>) => <
+  R extends {},
+  S extends {}
+>(
+  selectState: Selector<S, R>,
+  selectStateBefore?: Selector<S, R>
+) => (getEmitData: GetEmitData<R, E>): Middleware => ({ getState }) => (
+  next
+) => (action: AllActions) => {
+  const prevState = selectStateBefore
+    ? selectStateBefore(getState())
+    : selectState(getState())
   next(action)
-  const nextState = getState()
-  const emitData = getEmitData(prevState, nextState)
-  if (emitData !== undefined) {
-    subject.next(emitData)
-  }
+  const nextState = selectState(getState())
+  subject.next(getEmitData(nextState, prevState))
 }
