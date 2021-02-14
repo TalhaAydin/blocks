@@ -12,6 +12,8 @@ export const getEntityData = (id: EntityID) =>
     (entities): EntityData | undefined => entities[id]
   )
 
+export const getPiece = getEntityData('piece')
+
 export const getAllPlacedBlocks = createSelector(
   getEntities,
   (entities): Blocks[] => Object.values(entities).map(getPlacedEntityBlocks)

@@ -17,10 +17,13 @@ export const emit = <E extends {}>(subject: Subject<E>) => <
 ) => (getEmitData: GetEmitData<R, E>): Middleware => ({ getState }) => (
   next
 ) => (action: AllActions) => {
-  const prevState = selectStateBefore
-    ? selectStateBefore(getState())
-    : selectState(getState())
+  const prevState = getState()
   next(action)
-  const nextState = selectState(getState())
-  subject.next(getEmitData(nextState, prevState))
+  const nextState = getState()
+  subject.next(
+    getEmitData(
+      selectState(nextState),
+      selectStateBefore ? selectStateBefore(prevState) : selectState(prevState)
+    )
+  )
 }
