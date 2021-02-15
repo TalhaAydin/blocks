@@ -2,14 +2,14 @@ import { Subject } from 'rxjs'
 
 import { onChange } from '../onChange'
 import { rootReducer } from '../../reducers/root'
-import { getPiece } from '../../selectors/entities'
+import { getEntityData } from '../../selectors/entities'
 import { isEqualShape } from '../../../utils/blocks'
 import { createOPiece } from '../../../utils/piece'
 
 export const dontRotate = onChange(
   {
     subject: new Subject(),
-    selector: getPiece,
+    selector: getEntityData('piece'),
     getData: (pieceAfter) =>
       !!pieceAfter &&
       isEqualShape(createOPiece().shape, pieceAfter.shape) &&

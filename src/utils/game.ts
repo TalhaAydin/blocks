@@ -1,4 +1,5 @@
 import { GameStatus } from '../redux/reducers/game'
+import { createSize } from './size'
 
 export const isGameInProgress = (status: GameStatus): boolean =>
   status === GameStatus.ACTIVE || status === GameStatus.PAUSED
@@ -8,3 +9,5 @@ export const getLevel = (lineClears: number[]) =>
 
 export const getDescentDelay = (level: number) =>
   Math.max(100, 1000 - (level - 1) * 150)
+
+export const fieldSize = createSize(10, 20)

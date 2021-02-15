@@ -7,7 +7,7 @@ export interface OnChangeConfig<E, S, R> {
   subject: Subject<E>
   selector: Selector<S, R>
   selectorBefore?: Selector<S, R>
-  getData: (before: R, after: R) => E
+  getData: (after: R, before: R) => E
 }
 
 export interface OnBeforeChangeConfig<E, S, R> extends OnChangeConfig<E, S, R> {

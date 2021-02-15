@@ -26,6 +26,9 @@ export const getVector = (hash: string): Vector => {
 export const addVector = (vectorA: Vector, vectorB: Vector): Vector =>
   createVector(vectorA.x + vectorB.x, vectorA.y + vectorB.y)
 
+export const substractVector = (vectorA: Vector, vectorB: Vector): Vector =>
+  createVector(vectorA.x - vectorB.x, vectorA.y - vectorB.y)
+
 export const Movement: Record<string, Vector> = {
   Left: createVector(-1, 0),
   Right: createVector(1, 0),

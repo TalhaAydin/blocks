@@ -1,10 +1,10 @@
 import { identity } from 'ramda'
 import { onChange } from '../onChange'
 import { hasPiece as hasPieceSubject } from '../../../rxjs/subjects'
-import { hasPiece as hasPieceSelector } from '../../selectors/entities'
+import { hasEntity } from '../../selectors/entities'
 
 export const hasPiece = onChange(null, {
   subject: hasPieceSubject,
-  selector: hasPieceSelector,
+  selector: hasEntity('piece'),
   getData: identity,
 })

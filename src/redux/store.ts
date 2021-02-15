@@ -9,6 +9,7 @@ import { hasPiece } from './middleware/onChange/hasPiece'
 import { isGameInProgress } from './middleware/onChange/isGameInProgess'
 import { dontRotate } from './middleware/onChange/dontRotate'
 import { hasPile } from './middleware/onChange/hasPile'
+import { badMove } from './middleware/onChange/badMove'
 
 // side effects
 import '../rxjs/effects'
@@ -21,6 +22,7 @@ export const store = createStore(
       hasPiece,
       hasPile,
       isGameInProgress,
+      badMove,
       dontRotate
     )
   )
