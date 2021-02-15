@@ -2,7 +2,7 @@ import { createStore, Middleware, Reducer } from 'redux'
 import { Selector } from 'reselect'
 import { AllActions } from '../types'
 
-export type IsBadState<S extends {}> = (
+export type IsBadState<S = any> = (
   selectedStateAfter: S,
   selectedStateBefore: S
 ) => boolean

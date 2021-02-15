@@ -1,10 +1,10 @@
 import { applyMiddleware, createStore } from 'redux'
-import { isEqualShape } from '../../utils/blocks'
-import { createZPiece } from '../../utils/piece'
-import { addEntity, deleteEntity } from '../actions/entities'
-import { addClearedLines } from '../actions/game'
-import { rootReducer, RootState } from '../reducers/root'
-import { addGhost } from './addGhost'
+import { isEqualShape } from '../../../utils/blocks'
+import { createZPiece } from '../../../utils/piece'
+import { addEntity, deleteEntity } from '../../actions/entities'
+import { addClearedLines } from '../../actions/game'
+import { rootReducer, RootState } from '../../reducers/root'
+import { addGhost } from '../middleware/addGhost'
 
 const createTestStore = (preloadedState?: Partial<RootState>) =>
   createStore(rootReducer, preloadedState, applyMiddleware(addGhost))
