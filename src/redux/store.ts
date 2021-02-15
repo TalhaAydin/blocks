@@ -8,9 +8,10 @@ import { rootReducer } from './reducers/root'
 import { hasPiece } from './middleware/onChange/hasPiece'
 import { isGameInProgress } from './middleware/onChange/isGameInProgess'
 import { dontRotate } from './middleware/onChange/dontRotate'
+import { hasPile } from './middleware/onChange/hasPile'
 
 // side effects
-import '../rxjs/effects/addPiece'
+import '../rxjs/effects'
 
 export const store = createStore(
   rootReducer,
@@ -18,6 +19,7 @@ export const store = createStore(
     // prettier-ignore
     applyMiddleware(
       hasPiece,
+      hasPile,
       isGameInProgress,
       dontRotate
     )

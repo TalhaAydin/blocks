@@ -1,0 +1,2 @@
+import './addPiece'
+import './addPile'
