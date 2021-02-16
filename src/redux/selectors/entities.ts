@@ -4,8 +4,6 @@ import { EntitiesState, EntityData, EntityID } from '../reducers/entities'
 import { Blocks } from '../../utils/blocks'
 import { getPlacedEntityBlocks } from '../../utils/entities'
 
-// generic
-
 export const getEntities = (state: RootState): EntitiesState => state.entities
 
 export const getEntityData = (id: EntityID) =>

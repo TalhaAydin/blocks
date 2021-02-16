@@ -1,64 +1,57 @@
-import { createStore, Middleware, Reducer } from 'redux'
-import { Selector } from 'reselect'
+import { xor } from 'ramda'
+import { createStore, Middleware, PreloadedState, Reducer } from 'redux'
 import { Subject } from 'rxjs'
 import { AllActions } from '../types'
 
-export interface OnChangeConfig<E, S, R> {
-  subject: Subject<E>
-  selector: Selector<S, R>
-  selectorBefore?: Selector<S, R>
-  getData: (after: R, before: R) => E
+export interface OnChangeConfig<S, E> {
+  rootReducer?: Reducer<S> // needed for sims
+  subject?: Subject<E>
+  getPreEmitData?: (simAfter: S, before: S) => E
+  getPostEmitData?: (after: S, before: S) => E
+  stopOnPreEmit?: (data: E) => boolean
 }
 
-export interface OnBeforeChangeConfig<E, S, R> extends OnChangeConfig<E, S, R> {
-  rootReducer: Reducer<S>
-  stopOnEmit: (data: E) => boolean
-}
+export const onChange = <S, E>({
+  rootReducer,
+  subject: s,
+  getPreEmitData,
+  getPostEmitData,
+  stopOnPreEmit,
+}: OnChangeConfig<S, E>): Middleware<{}, S> => ({ getState }) => (next) => (
+  action: AllActions
+) => {
+  if (!xor(getPreEmitData, getPostEmitData)) {
+    throw new Error(
+      "Redux onChange Middleware: Need 'getPreEmitData' or 'getPostEmitData'"
+    )
+  }
 
-export const onChange = <E, S, R>(
-  before: OnBeforeChangeConfig<E, S, R> | null,
-  after: OnChangeConfig<E, S, R> | null
-): Middleware => ({ getState }) => (next) => (action: AllActions) => {
+  const subject = s || new Subject()
+
   const prevState = getState()
 
-  if (before) {
-    const {
-      selector,
-      getData,
-      subject,
-      selectorBefore,
-      rootReducer,
-      stopOnEmit,
-    } = before
-    const simStore = createStore(rootReducer, prevState)
+  if (getPreEmitData) {
+    if (!rootReducer) {
+      throw new Error(
+        "Redux onChange Middleware: Need 'rootReducer' if 'getPreEmitData' is provided"
+      )
+    }
+    const simStore = createStore(rootReducer, prevState as PreloadedState<S>)
     simStore.dispatch(action)
     const simNextState = simStore.getState()
 
-    const data = getData(
-      selector(simNextState),
-      selectorBefore ? selectorBefore(prevState) : selector(prevState)
-    )
-
-    if (data !== undefined) {
-      subject.next(data)
-
-      if (stopOnEmit(data)) {
-        return
-      }
+    const data = getPreEmitData(simNextState, prevState)
+    subject.next(data)
+    if (stopOnPreEmit && stopOnPreEmit(data)) {
+      return
     }
   }
 
   next(action)
 
-  if (after) {
+  if (getPostEmitData) {
     const nextState = getState()
-    const { selector, getData, subject, selectorBefore } = after
-    const data = getData(
-      selector(nextState),
-      selectorBefore ? selectorBefore(prevState) : selector(prevState)
-    )
-    if (data !== undefined) {
-      subject.next(data)
-    }
+    const data = getPostEmitData(nextState, prevState)
+    subject.next(data)
   }
 }

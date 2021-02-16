@@ -1,10 +1,9 @@
-import { identity } from 'ramda'
 import { onChange } from '../onChange'
 import { isGameInProgress as isGameInProgressSubject } from '../../../rxjs/subjects'
 import { isGameInProgress as isGameInProgressSelector } from '../../selectors/game'
+import { RootState } from '../../reducers/root'
 
-export const isGameInProgress = onChange(null, {
+export const isGameInProgress = onChange<RootState, boolean>({
   subject: isGameInProgressSubject,
-  selector: isGameInProgressSelector,
-  getData: identity,
+  getPostEmitData: (after) => isGameInProgressSelector(after),
 })

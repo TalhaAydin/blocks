@@ -1,10 +1,9 @@
-import { identity } from 'ramda'
 import { onChange } from '../onChange'
 import { hasPile as hasPileSubject } from '../../../rxjs/subjects'
 import { hasEntity } from '../../selectors/entities'
+import { RootState } from '../../reducers/root'
 
-export const hasPile = onChange(null, {
+export const hasPile = onChange<RootState, boolean>({
   subject: hasPileSubject,
-  selector: hasEntity('pile'),
-  getData: identity,
+  getPostEmitData: (after) => hasEntity('pile')(after),
 })
