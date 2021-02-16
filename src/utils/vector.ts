@@ -40,3 +40,9 @@ export const isZeroVector = (vector: Vector): boolean =>
   vector.x === 0 && vector.y === 0
 
 export const isDownVector = (vector: Vector): boolean => vector.y > 0
+
+export const isVector = (arg: any): arg is Vector =>
+  arg &&
+  arg.type === 'vector' &&
+  typeof arg.x === 'number' &&
+  typeof arg.y === 'number'
