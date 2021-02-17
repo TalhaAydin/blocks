@@ -17,5 +17,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src"],
-  "exclude": ["src/redux/_old"]
+  "exclude": ["src/redux/_old", "src/redux/middleware", "src/rxjs/effects"]
 }

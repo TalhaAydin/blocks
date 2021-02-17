@@ -1,6 +1,7 @@
 import { GameGrid } from '../ui/GameGrid'
 import { GameBlock } from '../ui/GameBlock'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
+import { useDispatch } from '../hooks/useDispatch'
 import { getAllPlacedBlocks } from '../redux/selectors/entities'
 import { getPoint, Point } from '../utils/point'
 import { useKeyboardControls } from '../hooks/useKeyboardControls'

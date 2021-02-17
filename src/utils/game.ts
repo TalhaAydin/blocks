@@ -11,3 +11,6 @@ export const getDescentDelay = (level: number) =>
   Math.max(100, 1000 - (level - 1) * 150)
 
 export const fieldSize = createSize(10, 20)
+
+export const isGameStatus = (arg: any): arg is GameStatus =>
+  Object.values(GameStatus).includes(arg)
